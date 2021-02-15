@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="icon.png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Pokédex</title>
+  </head>
+
+  <body>
+    <main>
+      <section>
+        <div class="container-find">
+          <div><h1>catch them all!!!</h1></div>
+          <div>
+            <input type="text" placeholder="type pokemon name/id here..." />
+          </div>
+          <div>
+            <button class="pk-btn" id="btn-find">go!</button>
+            <button class="pk-btn" id="btn-random">go random</button>
+          </div>
+        </div>
+        <div class="container-display">
+          <div class="lds-dual-ring"></div>
+          <div class="pk-card">
+            <div class="img">
+              <img id="pk-img" src="#" />
+            </div>
+            <div id="pk-name"></div>
+            <div id="pk-id"></div>
+            <div id="pk-type"></div>
+            <div>
+              <button class="pk-btn btn-small btn-invert" id="btn-catch">
+                catch
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="container-col">
+          <!-- This is filled dynamically by JS -->
+        </div>
+      </section>
+      <footer>
+        <p>
+          design by <a href="#" target="_blank">@jwodnicka</a> developed by
+          <a href="https://github.com/apintok" target="_blank">@apintok</a>
+        </p>
+        <p>work in progress...</p>
+      </footer>
+    </main>
+    <script src="js/bundle.js"></script>
+  </body>
+</html>

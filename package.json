@@ -1,0 +1,22 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "Visualize PokeAPI Data",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "build": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url .",
+    "watch": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ."
+  },
+  "author": "apintok",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "pokemon": "^2.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "parcel-bundler": "^1.12.4"
+  }
+}
