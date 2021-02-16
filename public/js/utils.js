@@ -1,47 +1,89 @@
+import runtime from 'regenerator-runtime';
+import axios from 'axios';
 import { generations } from './gens';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const spinner = document.querySelector('.lds-dual-ring');
+const pkImg = document.getElementById('pk-img');
+const btnImg = document.getElementById('btn-img');
 
-export const findPokemon = pokemon => {
-  // The parameter 'pokemon' is either an ID or a NAME;
-  const pkCard = document.querySelector('.pk-card');
-  pkCard.style.display = 'none';
+const getPokemonData = async pokemon => {
+  try {
+    const res = await axios.get(`${BASE_URL}${pokemon}`);
+    const pokeData = res.data;
+    // console.log(pokeData);
 
-  if (pokemon.match(/^\s*$/)) {
-    console.log('Empty: ', pokemon);
+    return {
+      name: pokeData.name,
+      id: pokeData.id,
+      type: getPokemonType(pokeData.types),
+      weight: pokeData.weight,
+      height: pokeData.height,
+      gen: getPokemonGeneration(pokeData.id),
+      front: pokeData.sprites.front_default,
+      back: pokeData.sprites.back_default,
+    };
+  } catch (error) {
+    console.log('GetPokemonData - Error: ', error.code);
+    return undefined;
   }
-  spinner.style.display = 'grid';
-  const api = BASE_URL + pokemon.toLowerCase();
-  fetch(api)
-    .then(function (res) {
-      return res.json();
-    })
-    .then(function (data) {
-      console.log('Image: ' + data.sprites.front_default);
-      console.log('ID: ' + data.id);
+};
 
-      document.getElementById('pk-name').innerText = data.name;
-      document.getElementById('pk-id').innerText = data.id;
-      document.getElementById('pk-type').innerText = getPokemonType(data.types);
-      document.getElementById('pk-img').src = data.sprites.front_default;
+export const findPokemon = async pokemon => {
+  // The parameter 'pokemon' is either an ID or a NAME;
+  try {
+    if (pokemon) {
+      const newPokemon = await getPokemonData(pokemon.toLowerCase());
+      console.log('New Pokémon: ', newPokemon);
+      const pkCard = document.querySelector('.pk-card');
+      pkCard.style.display = 'none';
+
+      if (pokemon.match(/^\s*$/)) {
+        console.error('Empty: ', pokemon);
+      }
+      spinner.style.display = 'grid';
+      pkImg.src = newPokemon.front;
+      document.getElementById('pk-name').innerText = `name: ${newPokemon.name}`;
+      document.getElementById('pk-id').innerText = `#${newPokemon.id}`;
+      document.getElementById(
+        'pk-type'
+      ).innerText = `type(s): ${newPokemon.type}`;
+      document.getElementById('pk-gen').innerText = newPokemon.gen;
+      document.getElementById(
+        'pk-height'
+      ).innerText = `height: ${newPokemon.height}`;
+      document.getElementById(
+        'pk-weight'
+      ).innerText = `weight: ${newPokemon.weight}`;
       pkCard.style.display = 'grid';
       document.querySelector('input').value = '';
       spinner.style.display = 'none';
-    })
-    .catch(function (err) {
-      console.log('Error: ' + err);
-    });
+
+      // Add Event Listernt to pkImg
+      let clicked = false;
+      btnImg.addEventListener('click', function (e) {
+        if (!clicked) {
+          pkImg.src = newPokemon.back;
+          this.innerText = 'front';
+          clicked = true;
+        } else {
+          pkImg.src = newPokemon.front;
+          this.innerText = 'back';
+          clicked = false;
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Func - findPokemon: ', error);
+  }
 };
 
 export const addPokemonToCollection = () => {
   const containerCol = document.querySelector('.container-col');
-
   const pkImg = document.getElementById('pk-img').src;
   const pkName = document.getElementById('pk-name').innerText;
   const pkId = document.getElementById('pk-id').innerText;
   const pkType = document.getElementById('pk-type').innerText;
-  console.log(`Pokemon: ${pkName} - ${pkId} with type: ${pkType} `, pkImg);
 
   // Create Pokemon Card
   // 1) Define needed DOM Elements

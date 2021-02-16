@@ -21,6 +21,4 @@ btnRandom.addEventListener('click', function (e) {
   findPokemon(randPokemon);
 });
 
-btnCatch.addEventListener('click', function (e) {
-  addPokemonToCollection();
-});
+btnCatch.addEventListener('click', addPokemonToCollection);
