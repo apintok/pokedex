@@ -41,17 +41,17 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
 
 - UI
   - Add functionality to the 'More Info' button;
-  - Structure the card to display more information;
-  - Change the button 'Catch' positioning;
+  - Structure the card to display more information; :heavy_check_mark:
+  - Change the button 'Catch' positioning; :heavy_check_mark:
   - Implement responsiveness;
+  - Need to make away of _**greying**_ out the button when no back available;
   - ...
 - JS Code
   - Apply a better DRY principle;
   - Use JS Classes for better data structuring;
   - User input error handling;
-  - Add Axios and async/await for new Promise calls;
-  - From pokemon 650 (included) there are no back images available;
-  - Need to make away of _**greying**_ out the button;
+  - Add Axios and async/await for new Promise calls; :heavy_check_mark:
+  - Constant code improvements;
   - ...
 - Problems
   - If the selected _view_ of the Pokemon is **back** on clicking catch the pokemon will be saved with that img;
@@ -62,3 +62,4 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
 ## Errors / Problems :no_entry:
 
 After installing axios I was prompt with an error in the browser stating that _regenerationRuntime is not defined_. I had to install the npm module regeneration-runtime as a dependency in order to fix the problem.
+PokeAPI Gen VI Pokemon don't have back images available, so I am working on how to prevent the user from changing the image to those Pokemon.

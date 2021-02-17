@@ -2823,8 +2823,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 var spinner = document.querySelector('.lds-dual-ring');
+var pkCard = document.querySelector('.pk-card');
 var pkImg = document.getElementById('pk-img');
 var btnImg = document.getElementById('btn-img');
+var pkName = document.getElementById('pk-name');
+var pkId = document.getElementById('pk-id');
+var pkType = document.getElementById('pk-type');
+var containerCol = document.querySelector('.container-col');
 
 var getPokemonData = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(pokemon) {
@@ -2855,8 +2860,8 @@ var getPokemonData = /*#__PURE__*/function () {
           case 8:
             _context.prev = 8;
             _context.t0 = _context["catch"](0);
-            console.log('GetPokemonData - Error: ', _context.t0.code);
-            return _context.abrupt("return", undefined);
+            console.log('GetPokemonData - Error: ', _context.t0.message);
+            return _context.abrupt("return", null);
 
           case 12:
           case "end":
@@ -2873,7 +2878,7 @@ var getPokemonData = /*#__PURE__*/function () {
 
 var findPokemon = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(pokemon) {
-    var newPokemon, pkCard, clicked;
+    var newPokemon, clicked;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -2881,7 +2886,7 @@ var findPokemon = /*#__PURE__*/function () {
             _context2.prev = 0;
 
             if (!pokemon) {
-              _context2.next = 22;
+              _context2.next = 9;
               break;
             }
 
@@ -2891,53 +2896,64 @@ var findPokemon = /*#__PURE__*/function () {
           case 4:
             newPokemon = _context2.sent;
             console.log('New Pokémon: ', newPokemon);
-            pkCard = document.querySelector('.pk-card');
-            pkCard.style.display = 'none';
 
-            if (pokemon.match(/^\s*$/)) {
-              console.error('Empty: ', pokemon);
+            if (newPokemon !== null) {
+              pkCard.style.display = 'none';
+
+              if (pokemon.match(/^\s*$/)) {
+                console.error('Empty: ', pokemon);
+              }
+
+              spinner.style.display = 'grid';
+              pkImg.src = newPokemon.front;
+              document.getElementById('pk-name').innerText = "name: ".concat(newPokemon.name);
+              document.getElementById('pk-id').innerText = "#".concat(newPokemon.id);
+              document.getElementById('pk-type').innerText = "type(s): ".concat(newPokemon.type);
+              document.getElementById('pk-gen').innerText = newPokemon.gen;
+              document.getElementById('pk-height').innerText = "height: ".concat(newPokemon.height);
+              document.getElementById('pk-weight').innerText = "weight: ".concat(newPokemon.weight);
+              pkCard.style.display = 'grid';
+              document.querySelector('input').value = '';
+              spinner.style.display = 'none'; // ? Add Event Listener to pkImgBtn to swith front and back
+
+              clicked = false;
+              console.log(newPokemon.back);
+              btnImg.addEventListener('click', function (e) {
+                if (!clicked) {
+                  pkImg.src = newPokemon.back;
+                  this.innerText = 'front';
+                  clicked = true;
+                } else {
+                  pkImg.src = newPokemon.front;
+                  this.innerText = 'back';
+                  clicked = false;
+                }
+              });
+            } else {
+              alert("Pokemon ".concat(pokemon.toUpperCase(), " not found. Please try another entry..."));
             }
 
-            spinner.style.display = 'grid';
-            pkImg.src = newPokemon.front;
-            document.getElementById('pk-name').innerText = "name: ".concat(newPokemon.name);
-            document.getElementById('pk-id').innerText = "#".concat(newPokemon.id);
-            document.getElementById('pk-type').innerText = "type(s): ".concat(newPokemon.type);
-            document.getElementById('pk-gen').innerText = newPokemon.gen;
-            document.getElementById('pk-height').innerText = "height: ".concat(newPokemon.height);
-            document.getElementById('pk-weight').innerText = "weight: ".concat(newPokemon.weight);
-            pkCard.style.display = 'grid';
-            document.querySelector('input').value = '';
-            spinner.style.display = 'none'; // Add Event Listernt to pkImg
-
-            clicked = false;
-            btnImg.addEventListener('click', function (e) {
-              if (!clicked) {
-                pkImg.src = newPokemon.back;
-                this.innerText = 'front';
-                clicked = true;
-              } else {
-                pkImg.src = newPokemon.front;
-                this.innerText = 'back';
-                clicked = false;
-              }
-            });
-
-          case 22:
-            _context2.next = 27;
+            _context2.next = 10;
             break;
 
-          case 24:
-            _context2.prev = 24;
+          case 9:
+            alert('Please enter a value or a id');
+
+          case 10:
+            _context2.next = 15;
+            break;
+
+          case 12:
+            _context2.prev = 12;
             _context2.t0 = _context2["catch"](0);
             console.error('Func - findPokemon: ', _context2.t0);
 
-          case 27:
+          case 15:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 24]]);
+    }, _callee2, null, [[0, 12]]);
   }));
 
   return function findPokemon(_x2) {
@@ -2948,13 +2964,8 @@ var findPokemon = /*#__PURE__*/function () {
 exports.findPokemon = findPokemon;
 
 var addPokemonToCollection = function addPokemonToCollection() {
-  var containerCol = document.querySelector('.container-col');
-  var pkImg = document.getElementById('pk-img').src;
-  var pkName = document.getElementById('pk-name').innerText;
-  var pkId = document.getElementById('pk-id').innerText;
-  var pkType = document.getElementById('pk-type').innerText; // Create Pokemon Card
-  // 1) Define needed DOM Elements
-
+  // ? Create Pokemon Collection Card
+  // * 1) Define new DOM Elements
   var pkCard = document.createElement('DIV');
   var pkCardName = document.createElement('DIV');
   var pkCardId = document.createElement('DIV');
@@ -2962,21 +2973,21 @@ var addPokemonToCollection = function addPokemonToCollection() {
   var pkCardImgDiv = document.createElement('DIV');
   var pkCardImg = document.createElement('IMG');
   var btnInfo = document.createElement('BUTTON');
-  var btnRemove = document.createElement('BUTTON'); // 2) Add the Pokemon Card Container
+  var btnRemove = document.createElement('BUTTON'); // * 2) Add the Pokemon Card Container
 
   pkCard.classList.add('pk-card-col');
-  containerCol.appendChild(pkCard); // 3) Append the Image Element
+  containerCol.appendChild(pkCard); // * 3) Append the Image Element
 
   pkCard.appendChild(pkCardImgDiv);
-  pkCardImg.src = pkImg;
-  pkCardImgDiv.appendChild(pkCardImg); // 4) Append the Info Elements
+  pkCardImg.src = pkImg.src;
+  pkCardImgDiv.appendChild(pkCardImg); // * 4) Append the Info Elements
 
-  pkCardName.innerText = pkName;
+  pkCardName.innerText = pkName.innerText;
   pkCard.appendChild(pkCardName);
-  pkCardId.innerText = "#".concat(pkId);
+  pkCardId.innerText = "#".concat(pkId.innerText);
   pkCard.appendChild(pkCardId);
-  pkCardType.innerText = pkType;
-  pkCard.appendChild(pkCardType); // 5) Append the Button Elements
+  pkCardType.innerText = pkType.innerText;
+  pkCard.appendChild(pkCardType); // * 5) Append the Button Elements
 
   btnInfo.innerText = 'more info';
   btnInfo.setAttribute('id', 'btn-info');
@@ -2986,9 +2997,9 @@ var addPokemonToCollection = function addPokemonToCollection() {
   btnRemove.setAttribute('id', 'btn-remove');
   btnRemove.classList.add('pk-btn', 'btn-small');
   btnRemove.addEventListener('click', function (e) {
-    btnRemove.parentElement.remove();
+    this.parentElement.remove();
   });
-  pkCard.appendChild(btnRemove); // 6) Display the Collection Section
+  pkCard.appendChild(btnRemove); // * 6) Display the Collection Section
 
   containerCol.style.display = 'grid';
 };
@@ -3078,7 +3089,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60602" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57652" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

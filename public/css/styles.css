@@ -56,32 +56,13 @@ body {
 
 .pk-card div:nth-child(1) {
   grid-row: 1 / 5;
+  border: 2px solid #2232ff;
+  border-radius: 10px;
 }
 
 .pk-card div:nth-child(8) {
   grid-column: 2 / 4;
 }
-
-/* .pk-card div:nth-child(1) {
-  grid-row: 1 / 4;
-}
-
-.pk-card div:nth-child(2) {
-  grid-column: 2 / 4;
-}
-
-.pk-card div:nth-child(3) {
-  grid-column: 2 / 4;
-}
-
-.pk-card div:nth-child(4) {
-  grid-column: 2 / 4;
-}
-
-.pk-card div:nth-child(5) {
-  grid-column: 4 / 5;
-  grid-row: 1 / 4;
-} */
 
 /* 
 * SECOND SECTION 
