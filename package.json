@@ -4,6 +4,7 @@
   "description": "Visualize PokeAPI Data",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "dev": "nodemon app.js",
     "build": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url .",
     "watch": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ."
