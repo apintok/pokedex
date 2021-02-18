@@ -150,6 +150,16 @@ input {
   border-color: #2232ff;
 }
 
+.btn-disabled {
+  color: gray;
+  border-color: gray;
+}
+
+.btn-disabled:hover {
+  color: gray;
+  border-color: gray;
+}
+
 .btn-small {
   box-shadow: 4px 3px #2a3081;
   font-size: 24px;

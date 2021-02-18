@@ -51,15 +51,16 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
   - Use JS Classes for better data structuring;
   - User input error handling;
   - Add Axios and async/await for new Promise calls; :heavy_check_mark:
+  - Structure the findPokemon() function;
   - Constant code improvements;
   - ...
 - Problems
   - If the selected _view_ of the Pokemon is **back** on clicking catch the pokemon will be saved with that img;
+  - PokeAPI Gen VI Pokemon don't have back images available, so I am working on how to prevent the user from changing the image to those Pokemon.
   - ...
 
 ---
 
-## Errors / Problems :no_entry:
+## Errors :no_entry:
 
 After installing axios I was prompt with an error in the browser stating that _regenerationRuntime is not defined_. I had to install the npm module regeneration-runtime as a dependency in order to fix the problem.
-PokeAPI Gen VI Pokemon don't have back images available, so I am working on how to prevent the user from changing the image to those Pokemon.

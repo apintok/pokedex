@@ -2829,6 +2829,7 @@ var btnImg = document.getElementById('btn-img');
 var pkName = document.getElementById('pk-name');
 var pkId = document.getElementById('pk-id');
 var pkType = document.getElementById('pk-type');
+var containerDisplay = document.querySelector('.container-display');
 var containerCol = document.querySelector('.container-col');
 
 var getPokemonData = /*#__PURE__*/function () {
@@ -2878,7 +2879,7 @@ var getPokemonData = /*#__PURE__*/function () {
 
 var findPokemon = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(pokemon) {
-    var newPokemon, clicked;
+    var newPokemon;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
@@ -2914,21 +2915,7 @@ var findPokemon = /*#__PURE__*/function () {
               document.getElementById('pk-weight').innerText = "weight: ".concat(newPokemon.weight);
               pkCard.style.display = 'grid';
               document.querySelector('input').value = '';
-              spinner.style.display = 'none'; // ? Add Event Listener to pkImgBtn to swith front and back
-
-              clicked = false;
-              console.log(newPokemon.back);
-              btnImg.addEventListener('click', function (e) {
-                if (!clicked) {
-                  pkImg.src = newPokemon.back;
-                  this.innerText = 'front';
-                  clicked = true;
-                } else {
-                  pkImg.src = newPokemon.front;
-                  this.innerText = 'back';
-                  clicked = false;
-                }
-              });
+              spinner.style.display = 'none';
             } else {
               alert("Pokemon ".concat(pokemon.toUpperCase(), " not found. Please try another entry..."));
             }
@@ -2966,7 +2953,7 @@ exports.findPokemon = findPokemon;
 var addPokemonToCollection = function addPokemonToCollection() {
   // ? Create Pokemon Collection Card
   // * 1) Define new DOM Elements
-  var pkCard = document.createElement('DIV');
+  var pkCardCol = document.createElement('DIV');
   var pkCardName = document.createElement('DIV');
   var pkCardId = document.createElement('DIV');
   var pkCardType = document.createElement('DIV');
@@ -2975,31 +2962,31 @@ var addPokemonToCollection = function addPokemonToCollection() {
   var btnInfo = document.createElement('BUTTON');
   var btnRemove = document.createElement('BUTTON'); // * 2) Add the Pokemon Card Container
 
-  pkCard.classList.add('pk-card-col');
-  containerCol.appendChild(pkCard); // * 3) Append the Image Element
+  pkCardCol.classList.add('pk-card-col');
+  containerCol.appendChild(pkCardCol); // * 3) Append the Image Element
 
-  pkCard.appendChild(pkCardImgDiv);
+  pkCardCol.appendChild(pkCardImgDiv);
   pkCardImg.src = pkImg.src;
   pkCardImgDiv.appendChild(pkCardImg); // * 4) Append the Info Elements
 
   pkCardName.innerText = pkName.innerText;
-  pkCard.appendChild(pkCardName);
+  pkCardCol.appendChild(pkCardName);
   pkCardId.innerText = "#".concat(pkId.innerText);
-  pkCard.appendChild(pkCardId);
+  pkCardCol.appendChild(pkCardId);
   pkCardType.innerText = pkType.innerText;
-  pkCard.appendChild(pkCardType); // * 5) Append the Button Elements
+  pkCardCol.appendChild(pkCardType); // * 5) Append the Button Elements
 
   btnInfo.innerText = 'more info';
   btnInfo.setAttribute('id', 'btn-info');
   btnInfo.classList.add('pk-btn', 'btn-small');
-  pkCard.appendChild(btnInfo);
+  pkCardCol.appendChild(btnInfo);
   btnRemove.innerText = 'x';
   btnRemove.setAttribute('id', 'btn-remove');
   btnRemove.classList.add('pk-btn', 'btn-small');
   btnRemove.addEventListener('click', function (e) {
     this.parentElement.remove();
   });
-  pkCard.appendChild(btnRemove); // * 6) Display the Collection Section
+  pkCardCol.appendChild(btnRemove); // * 6) Display the Collection Section
 
   containerCol.style.display = 'grid';
 };
@@ -3034,6 +3021,38 @@ var getPokemonGeneration = function getPokemonGeneration(id) {
     if (_typeof(_ret) === "object") return _ret.v;
   }
 };
+
+var createPokemonCard = function createPokemonCard(pokemon) {
+  var pkCard = document.createElement('DIV');
+  var pkCardImg = document.createElement('DIV');
+  var pkCardName = document.createElement('DIV');
+  var pkCardId = document.createElement('DIV');
+  var pkCardType = document.createElement('DIV');
+  var pkCardGen = document.createElement('DIV');
+  var pkCardHeight = document.createElement('DIV');
+  var pkCardWeight = document.createElement('DIV');
+  var btnCatch = document.createElement('DIV');
+  console.log('here');
+  pkCard.classList.add('pk-card');
+  containerDisplay.appendChild(pkCard);
+};
+/**
+ * ? Add Event Listener to pkImgBtn to swith front and back
+let clicked = false;
+
+  btnImg.addEventListener('click', function (e) {
+    console.log('Back Image:', newPokemon.back);
+    if (!clicked) {
+      pkImg.src = newPokemon.back;
+      this.innerText = 'front';
+      clicked = true;
+    } else {
+      pkImg.src = newPokemon.front;
+      this.innerText = 'back';
+      clicked = false;
+    }
+  });
+ */
 },{"regenerator-runtime":"../../node_modules/regenerator-runtime/runtime.js","axios":"../../node_modules/axios/index.js","./gens":"gens.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -3089,7 +3108,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57652" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55990" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
