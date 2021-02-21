@@ -130,13 +130,11 @@ export const addPokemonToCollection = () => {
 };
 
 const getPokemonType = types => {
-  const pkTypes = [];
-  for (let i = 0; i < types.length; i++) {
-    pkTypes.push(types[i].type.name);
-  }
-  const pkTypesTest =
-    pkTypes.length < 2 ? `${pkTypes[0]}` : `${pkTypes[0]}/${pkTypes[1]}`;
-  return pkTypesTest;
+  const [type1, type2] = types;
+
+  return types.length < 2
+    ? `${type1.type.name}`
+    : `${type1.type.name}/${type2.type.name}`;
 };
 
 const getPokemonGeneration = id => {
