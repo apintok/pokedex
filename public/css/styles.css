@@ -3,10 +3,29 @@ body {
   font-size: 24px;
   background-color: #2232ff;
   color: #f6ff0e;
-  margin: 0;
+  margin: 0 60px;
   padding: 0;
   box-sizing: border-box;
   border: none;
+}
+
+/* 
+* HEADER 
+* ...............
+*/
+
+header ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+header ul li {
+  display: inline;
+  text-align: center;
+  padding: 10px;
 }
 
 /* 
@@ -15,13 +34,13 @@ body {
 */
 
 .container-find {
-  display: grid;
-  grid-template-columns: auto;
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 
 .container-find h1 {
-  margin: 15px 0 15px 0;
+  margin: 25px 0;
   font-size: 50px;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -29,10 +48,11 @@ body {
 }
 
 .container-display {
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  justify-content: center;
   text-align: center;
   padding: 20px;
+  min-height: 150px;
 }
 
 .pk-card {
@@ -71,8 +91,8 @@ body {
 
 .container-col {
   display: none;
-  grid-column-gap: 50px;
-  grid-template-columns: auto auto auto auto auto auto;
+  flex-wrap: wrap;
+  justify-content: center;
   margin-top: 5px;
   padding: 12px;
 }
@@ -85,6 +105,8 @@ body {
   box-shadow: 5px 5px 0px 5px #2a3081;
   text-align: center;
   text-transform: uppercase;
+  margin: 2px;
+  min-width: 230px;
 }
 
 .pk-card-col div:nth-child(1) {
@@ -116,8 +138,8 @@ input {
   color: inherit;
   font-family: inherit;
   font-size: 32px;
-  width: 50%;
-  margin: 20px auto auto 20px;
+  margin: 10px none;
+  text-align: center;
 }
 
 .pk-btn {
@@ -130,7 +152,7 @@ input {
   text-transform: uppercase;
   text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
   padding: 10px;
-  margin: 40px 20px;
+  margin: 30px 5px;
 }
 
 .pk-btn:hover {
@@ -167,6 +189,11 @@ input {
   margin: 10px 10px;
   padding: 0;
 }
+
+/*
+* FOOTER
+* ...............
+*/
 
 footer {
   position: relative;
@@ -222,7 +249,37 @@ a {
 * ...............
 */
 
-@media only screen and (max-width: 412px) {
+@media only screen and (max-width: 482px) {
+  header ul {
+    justify-content: center;
+  }
+
+  .container-find h1 {
+    font-size: 42px;
+  }
+
+  input {
+    margin: 0 auto;
+  }
+
+  input::placeholder {
+    font-size: 16px;
+  }
+
+  .container-find div:nth-child(3) {
+    display: flex;
+  }
+
+  #btn-find {
+    flex: 50%;
+    font-size: 24px;
+  }
+
+  #btn-random {
+    flex: 50%;
+    font-size: 24px;
+  }
+
   .container-col {
     grid-template-columns: auto auto;
   }

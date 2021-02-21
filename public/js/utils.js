@@ -10,7 +10,6 @@ const btnImg = document.getElementById('btn-img');
 const pkName = document.getElementById('pk-name');
 const pkId = document.getElementById('pk-id');
 const pkType = document.getElementById('pk-type');
-const containerDisplay = document.querySelector('.container-display');
 const containerCol = document.querySelector('.container-col');
 
 const getPokemonData = async pokemon => {
@@ -61,12 +60,12 @@ export const findPokemon = async pokemon => {
           'pk-type'
         ).innerText = `type(s): ${newPokemon.type}`;
         document.getElementById('pk-gen').innerText = newPokemon.gen;
-        document.getElementById(
-          'pk-height'
-        ).innerText = `height: ${newPokemon.height}`;
-        document.getElementById(
-          'pk-weight'
-        ).innerText = `weight: ${newPokemon.weight}`;
+        document.getElementById('pk-height').innerText = `height: ${precise(
+          newPokemon.height
+        )}m`;
+        document.getElementById('pk-weight').innerText = `weight: ${precise(
+          newPokemon.weight
+        )}kg`;
         pkCard.style.display = 'grid';
         document.querySelector('input').value = '';
         spinner.style.display = 'none';
@@ -107,7 +106,7 @@ export const addPokemonToCollection = () => {
   // * 4) Append the Info Elements
   pkCardName.innerText = pkName.innerText;
   pkCardCol.appendChild(pkCardName);
-  pkCardId.innerText = `#${pkId.innerText}`;
+  pkCardId.innerText = pkId.innerText;
   pkCardCol.appendChild(pkCardId);
   pkCardType.innerText = pkType.innerText;
   pkCardCol.appendChild(pkCardType);
@@ -126,7 +125,7 @@ export const addPokemonToCollection = () => {
   pkCardCol.appendChild(btnRemove);
 
   // * 6) Display the Collection Section
-  containerCol.style.display = 'grid';
+  containerCol.style.display = 'flex';
 };
 
 const getPokemonType = types => {
@@ -145,20 +144,14 @@ const getPokemonGeneration = id => {
   }
 };
 
-const createPokemonCard = pokemon => {
-  const pkCard = document.createElement('DIV');
-  const pkCardImg = document.createElement('DIV');
-  const pkCardName = document.createElement('DIV');
-  const pkCardId = document.createElement('DIV');
-  const pkCardType = document.createElement('DIV');
-  const pkCardGen = document.createElement('DIV');
-  const pkCardHeight = document.createElement('DIV');
-  const pkCardWeight = document.createElement('DIV');
-  const btnCatch = document.createElement('DIV');
-
-  console.log('here');
-  pkCard.classList.add('pk-card');
-  containerDisplay.appendChild(pkCard);
+const precise = number => {
+  const toDecimal = 0.1;
+  console.log(
+    `${number} a multiplicar por ${toDecimal} = ${Number.parseFloat(
+      number * toDecimal
+    )}`
+  );
+  return Number.parseFloat(number * toDecimal).toPrecision(3);
 };
 
 /**

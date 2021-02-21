@@ -2841,7 +2841,6 @@ var btnImg = document.getElementById('btn-img');
 var pkName = document.getElementById('pk-name');
 var pkId = document.getElementById('pk-id');
 var pkType = document.getElementById('pk-type');
-var containerDisplay = document.querySelector('.container-display');
 var containerCol = document.querySelector('.container-col');
 
 var getPokemonData = /*#__PURE__*/function () {
@@ -2923,8 +2922,8 @@ var findPokemon = /*#__PURE__*/function () {
               document.getElementById('pk-id').innerText = "#".concat(newPokemon.id);
               document.getElementById('pk-type').innerText = "type(s): ".concat(newPokemon.type);
               document.getElementById('pk-gen').innerText = newPokemon.gen;
-              document.getElementById('pk-height').innerText = "height: ".concat(newPokemon.height);
-              document.getElementById('pk-weight').innerText = "weight: ".concat(newPokemon.weight);
+              document.getElementById('pk-height').innerText = "height: ".concat(precise(newPokemon.height), "m");
+              document.getElementById('pk-weight').innerText = "weight: ".concat(precise(newPokemon.weight), "kg");
               pkCard.style.display = 'grid';
               document.querySelector('input').value = '';
               spinner.style.display = 'none';
@@ -2983,7 +2982,7 @@ var addPokemonToCollection = function addPokemonToCollection() {
 
   pkCardName.innerText = pkName.innerText;
   pkCardCol.appendChild(pkCardName);
-  pkCardId.innerText = "#".concat(pkId.innerText);
+  pkCardId.innerText = pkId.innerText;
   pkCardCol.appendChild(pkCardId);
   pkCardType.innerText = pkType.innerText;
   pkCardCol.appendChild(pkCardType); // * 5) Append the Button Elements
@@ -3000,7 +2999,7 @@ var addPokemonToCollection = function addPokemonToCollection() {
   });
   pkCardCol.appendChild(btnRemove); // * 6) Display the Collection Section
 
-  containerCol.style.display = 'grid';
+  containerCol.style.display = 'flex';
 };
 
 exports.addPokemonToCollection = addPokemonToCollection;
@@ -3031,19 +3030,10 @@ var getPokemonGeneration = function getPokemonGeneration(id) {
   }
 };
 
-var createPokemonCard = function createPokemonCard(pokemon) {
-  var pkCard = document.createElement('DIV');
-  var pkCardImg = document.createElement('DIV');
-  var pkCardName = document.createElement('DIV');
-  var pkCardId = document.createElement('DIV');
-  var pkCardType = document.createElement('DIV');
-  var pkCardGen = document.createElement('DIV');
-  var pkCardHeight = document.createElement('DIV');
-  var pkCardWeight = document.createElement('DIV');
-  var btnCatch = document.createElement('DIV');
-  console.log('here');
-  pkCard.classList.add('pk-card');
-  containerDisplay.appendChild(pkCard);
+var precise = function precise(number) {
+  var toDecimal = 0.1;
+  console.log("".concat(number, " a multiplicar por ").concat(toDecimal, " = ").concat(Number.parseFloat(number * toDecimal)));
+  return Number.parseFloat(number * toDecimal).toPrecision(3);
 };
 /**
  * ? Add Event Listener to pkImgBtn to swith front and back
@@ -3117,7 +3107,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58240" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50641" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

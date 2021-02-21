@@ -1,6 +1,6 @@
 **v 1.0.0** :hammer:
 
-**Not live yet**
+**live at** _https://pokefindex.herokuapp.com_
 
 ---
 
@@ -44,7 +44,8 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
   - Structure the card to display more information; :heavy_check_mark:
   - Change the button 'Catch' positioning; :heavy_check_mark:
   - Implement responsiveness;
-  - Need to make away of _**greying**_ out the button when no back available;
+  - Need to make away of _**greying**_ out the button when no back image available;
+  - Better HTML page structure;
   - ...
 - JS Code
   - Apply a better DRY principle;
@@ -53,6 +54,7 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
   - Add Axios and async/await for new Promise calls; :heavy_check_mark:
   - Structure the findPokemon() function;
   - Constant code improvements;
+  - Create a function to round the pokemon height and weight;
   - ...
 - Problems
   - If the selected _view_ of the Pokemon is **back** on clicking catch the pokemon will be saved with that img;

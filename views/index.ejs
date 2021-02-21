@@ -15,16 +15,27 @@
   </head>
 
   <body>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="https://github.com/apintok/pokedex" target="_blank"
+              >github</a
+            >
+          </li>
+          <li><a href="https://pokeapi.co" target="_blank">pokeapi</a></li>
+          <li>info</li>
+        </ul>
+      </nav>
+    </header>
     <main>
       <section>
         <div class="container-find">
           <div><h1>catch them all!!!</h1></div>
-          <div>
-            <input type="text" placeholder="type pokemon name/id here..." />
-          </div>
+          <input type="text" placeholder="type pokemon name/id here..." />
           <div>
             <button class="pk-btn" id="btn-find">go!</button>
-            <button class="pk-btn" id="btn-random">go random</button>
+            <button class="pk-btn" id="btn-random">random!</button>
           </div>
         </div>
         <div class="container-display">
@@ -57,17 +68,14 @@
           <!-- This is filled dynamically by JS -->
         </div>
       </section>
-      <footer>
-        <p>
-          design by <a href="#" target="_blank">@jwodnicka</a> developed by
-          <a href="https://github.com/apintok" target="_blank">@apintok</a>
-        </p>
-        <p>
-          work in progress... see more on
-          <a href="https://github.com/apintok/pokedex">github</a>
-        </p>
-      </footer>
     </main>
+    <footer>
+      <p>
+        design by <a href="#" target="_blank">@jwodnicka</a> developed by
+        <a href="https://github.com/apintok" target="_blank">@apintok</a>
+      </p>
+      <p>work in progress...</p>
+    </footer>
     <script src="js/bundle.js"></script>
   </body>
 </html>
