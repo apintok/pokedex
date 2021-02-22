@@ -21,4 +21,12 @@ btnRandom.addEventListener('click', function (e) {
   findPokemon(randPokemon);
 });
 
+document.querySelector('body').addEventListener('keyup', function (e) {
+  console.log(e.key);
+  if (e.key === 'r') {
+    const randPokemon = p.random();
+    findPokemon(randPokemon);
+  }
+});
+
 btnCatch.addEventListener('click', addPokemonToCollection);

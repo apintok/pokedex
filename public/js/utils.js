@@ -6,7 +6,6 @@ const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const spinner = document.querySelector('.lds-dual-ring');
 const pkCard = document.querySelector('.pk-card');
 const pkImg = document.getElementById('pk-img');
-const btnImg = document.getElementById('btn-img');
 const pkName = document.getElementById('pk-name');
 const pkId = document.getElementById('pk-id');
 const pkType = document.getElementById('pk-type');
@@ -61,10 +60,12 @@ export const findPokemon = async pokemon => {
         ).innerText = `type(s): ${newPokemon.type}`;
         document.getElementById('pk-gen').innerText = newPokemon.gen;
         document.getElementById('pk-height').innerText = `height: ${precise(
-          newPokemon.height
+          newPokemon.height,
+          1
         )}m`;
         document.getElementById('pk-weight').innerText = `weight: ${precise(
-          newPokemon.weight
+          newPokemon.weight,
+          3
         )}kg`;
         pkCard.style.display = 'grid';
         document.querySelector('input').value = '';
@@ -112,7 +113,7 @@ export const addPokemonToCollection = () => {
   pkCardCol.appendChild(pkCardType);
 
   // * 5) Append the Button Elements
-  btnInfo.innerText = 'more info';
+  btnInfo.innerText = 'info';
   btnInfo.setAttribute('id', 'btn-info');
   btnInfo.classList.add('pk-btn', 'btn-small');
   pkCardCol.appendChild(btnInfo);
@@ -144,14 +145,9 @@ const getPokemonGeneration = id => {
   }
 };
 
-const precise = number => {
+const precise = (number, precision) => {
   const toDecimal = 0.1;
-  console.log(
-    `${number} a multiplicar por ${toDecimal} = ${Number.parseFloat(
-      number * toDecimal
-    )}`
-  );
-  return Number.parseFloat(number * toDecimal).toPrecision(3);
+  return Number.parseFloat(number * toDecimal).toPrecision(precision);
 };
 
 /**

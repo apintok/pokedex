@@ -2837,7 +2837,6 @@ var BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 var spinner = document.querySelector('.lds-dual-ring');
 var pkCard = document.querySelector('.pk-card');
 var pkImg = document.getElementById('pk-img');
-var btnImg = document.getElementById('btn-img');
 var pkName = document.getElementById('pk-name');
 var pkId = document.getElementById('pk-id');
 var pkType = document.getElementById('pk-type');
@@ -2922,8 +2921,8 @@ var findPokemon = /*#__PURE__*/function () {
               document.getElementById('pk-id').innerText = "#".concat(newPokemon.id);
               document.getElementById('pk-type').innerText = "type(s): ".concat(newPokemon.type);
               document.getElementById('pk-gen').innerText = newPokemon.gen;
-              document.getElementById('pk-height').innerText = "height: ".concat(precise(newPokemon.height), "m");
-              document.getElementById('pk-weight').innerText = "weight: ".concat(precise(newPokemon.weight), "kg");
+              document.getElementById('pk-height').innerText = "height: ".concat(precise(newPokemon.height, 1), "m");
+              document.getElementById('pk-weight').innerText = "weight: ".concat(precise(newPokemon.weight, 3), "kg");
               pkCard.style.display = 'grid';
               document.querySelector('input').value = '';
               spinner.style.display = 'none';
@@ -2987,7 +2986,7 @@ var addPokemonToCollection = function addPokemonToCollection() {
   pkCardType.innerText = pkType.innerText;
   pkCardCol.appendChild(pkCardType); // * 5) Append the Button Elements
 
-  btnInfo.innerText = 'more info';
+  btnInfo.innerText = 'info';
   btnInfo.setAttribute('id', 'btn-info');
   btnInfo.classList.add('pk-btn', 'btn-small');
   pkCardCol.appendChild(btnInfo);
@@ -3030,10 +3029,9 @@ var getPokemonGeneration = function getPokemonGeneration(id) {
   }
 };
 
-var precise = function precise(number) {
+var precise = function precise(number, precision) {
   var toDecimal = 0.1;
-  console.log("".concat(number, " a multiplicar por ").concat(toDecimal, " = ").concat(Number.parseFloat(number * toDecimal)));
-  return Number.parseFloat(number * toDecimal).toPrecision(3);
+  return Number.parseFloat(number * toDecimal).toPrecision(precision);
 };
 /**
  * ? Add Event Listener to pkImgBtn to swith front and back
@@ -3078,6 +3076,15 @@ btnRandom.addEventListener('click', function (e) {
 
   (0, _utils.findPokemon)(randPokemon);
 });
+document.querySelector('body').addEventListener('keyup', function (e) {
+  console.log(e.key);
+
+  if (e.key === 'r') {
+    var randPokemon = _pokemon.default.random();
+
+    (0, _utils.findPokemon)(randPokemon);
+  }
+});
 btnCatch.addEventListener('click', _utils.addPokemonToCollection);
 },{"pokemon":"../../node_modules/pokemon/index.js","./utils":"utils.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -3107,7 +3114,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50641" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62326" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

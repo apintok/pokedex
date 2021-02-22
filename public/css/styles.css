@@ -103,10 +103,11 @@ header ul li {
   border: 7px solid #f6ff0e;
   border-radius: 10px 10px;
   box-shadow: 5px 5px 0px 5px #2a3081;
+  font-size: 22px;
   text-align: center;
   text-transform: uppercase;
-  margin: 2px;
-  min-width: 230px;
+  margin: 4px;
+  min-width: 160px;
 }
 
 .pk-card-col div:nth-child(1) {
