@@ -74,9 +74,11 @@ export const findPokemon = async pokemon => {
         alert(
           `Pokemon ${pokemon.toUpperCase()} not found. Please try another entry...`
         );
+        return null;
       }
     } else {
       alert('Please enter a value or a id');
+      return undefined;
     }
   } catch (error) {
     console.error('Func - findPokemon: ', error);

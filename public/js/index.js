@@ -6,27 +6,21 @@ const btnFind = document.getElementById('btn-find');
 const btnRandom = document.getElementById('btn-random');
 const btnCatch = document.getElementById('btn-catch');
 
-input.addEventListener('keyup', function (e) {
+input.addEventListener('keyup', async function (e) {
   if (e.key === 'Enter') {
-    findPokemon(input.value);
+    const found = await findPokemon(input.value);
+    if (!found) this.value = '';
   }
 });
 
-btnFind.addEventListener('click', function (e) {
-  findPokemon(input.value);
+btnFind.addEventListener('click', async function (e) {
+  const found = await findPokemon(input.value);
+  if (!found) input.value = '';
 });
 
 btnRandom.addEventListener('click', function (e) {
   const randPokemon = p.random();
   findPokemon(randPokemon);
-});
-
-document.querySelector('body').addEventListener('keyup', function (e) {
-  console.log(e.key);
-  if (e.key === 'r') {
-    const randPokemon = p.random();
-    findPokemon(randPokemon);
-  }
 });
 
 btnCatch.addEventListener('click', addPokemonToCollection);
