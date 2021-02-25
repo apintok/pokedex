@@ -5,6 +5,7 @@ const input = document.querySelector('input');
 const btnFind = document.getElementById('btn-find');
 const btnRandom = document.getElementById('btn-random');
 const btnCatch = document.getElementById('btn-catch');
+const infoLink = document.getElementById('info-link');
 
 input.addEventListener('keyup', async function (e) {
   if (e.key === 'Enter') {
@@ -24,3 +25,7 @@ btnRandom.addEventListener('click', function (e) {
 });
 
 btnCatch.addEventListener('click', addPokemonToCollection);
+
+infoLink.addEventListener('click', function (e) {
+  // Modal Window Code
+});

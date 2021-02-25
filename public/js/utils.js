@@ -13,6 +13,7 @@ const containerCol = document.querySelector('.container-col');
 
 const getPokemonData = async pokemon => {
   try {
+    console.log(`${BASE_URL}${pokemon}`);
     const res = await axios.get(`${BASE_URL}${pokemon}`);
     const pokeData = res.data;
     // console.log(pokeData);
@@ -37,15 +38,11 @@ export const findPokemon = async pokemon => {
   // ? The parameter 'pokemon' is either an ID or a NAME;
   try {
     if (pokemon) {
-      const newPokemon = await getPokemonData(pokemon.toLowerCase());
+      const newPokemon = await getPokemonData(pokemon.toLowerCase().trim());
       console.log('New Pokémon: ', newPokemon);
 
       if (newPokemon !== null) {
         pkCard.style.display = 'none';
-
-        if (pokemon.match(/^\s*$/)) {
-          console.error('Empty: ', pokemon);
-        }
 
         spinner.style.display = 'grid';
 
