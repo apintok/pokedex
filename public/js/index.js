@@ -1,4 +1,3 @@
-import p from 'pokemon';
 import { findPokemon, displayPokemonCard } from './utils';
 
 const input = document.querySelector('input');
@@ -31,6 +30,7 @@ btnFind.addEventListener('click', async function (e) {
 
 btnRandom.addEventListener('click', async function (e) {
   const random = String(Math.trunc(Math.random() * (798 - 1) + 1));
+  console.log('RANDOM: ', random);
   const found = await findPokemon(random);
   displayPokemonCard(found);
 });
