@@ -1,5 +1,5 @@
 import p from 'pokemon';
-import { findPokemon, addPokemonToCollection } from './utils';
+import { findPokemon, displayPokemonCard } from './utils';
 
 const input = document.querySelector('input');
 const btnFind = document.getElementById('btn-find');
@@ -10,21 +10,30 @@ const infoLink = document.getElementById('info-link');
 input.addEventListener('keyup', async function (e) {
   if (e.key === 'Enter') {
     const found = await findPokemon(input.value);
-    if (!found) this.value = '';
+    if (!found) {
+      this.value = '';
+    } else {
+      displayPokemonCard(found);
+      this.value = '';
+    }
   }
 });
 
 btnFind.addEventListener('click', async function (e) {
   const found = await findPokemon(input.value);
-  if (!found) input.value = '';
+  if (!found) {
+    input.value = '';
+  } else {
+    displayPokemonCard(found);
+    input.value = '';
+  }
 });
 
-btnRandom.addEventListener('click', function (e) {
+btnRandom.addEventListener('click', async function (e) {
   const randPokemon = p.random();
-  findPokemon(randPokemon);
+  const found = await findPokemon(randPokemon);
+  displayPokemonCard(found);
 });
-
-btnCatch.addEventListener('click', addPokemonToCollection);
 
 infoLink.addEventListener('click', function (e) {
   // Modal Window Code

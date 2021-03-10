@@ -1,6 +1,7 @@
-import runtime from 'regenerator-runtime';
+import runtime, { async } from 'regenerator-runtime';
 import axios from 'axios';
 import { generations } from './gens';
+import pokemon from 'pokemon';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const spinner = document.querySelector('.lds-dual-ring');
@@ -10,10 +11,10 @@ const pkName = document.getElementById('pk-name');
 const pkId = document.getElementById('pk-id');
 const pkType = document.getElementById('pk-type');
 const containerCol = document.querySelector('.container-col');
+let pokemonCollection = [];
 
 const getPokemonData = async pokemon => {
   try {
-    console.log(`${BASE_URL}${pokemon}`);
     const res = await axios.get(`${BASE_URL}${pokemon}`);
     const pokeData = res.data;
     // console.log(pokeData);
@@ -42,39 +43,17 @@ export const findPokemon = async pokemon => {
       console.log('New Pokémon: ', newPokemon);
 
       if (newPokemon !== null) {
-        pkCard.style.display = 'none';
-
-        spinner.style.display = 'grid';
-
-        pkImg.src = newPokemon.front;
-
-        document.getElementById(
-          'pk-name'
-        ).innerText = `name: ${newPokemon.name}`;
-        document.getElementById('pk-id').innerText = `#${newPokemon.id}`;
-        document.getElementById(
-          'pk-type'
-        ).innerText = `type(s): ${newPokemon.type}`;
-        document.getElementById('pk-gen').innerText = newPokemon.gen;
-        document.getElementById('pk-height').innerText = `height: ${precise(
-          newPokemon.height,
-          1
-        )}m`;
-        document.getElementById('pk-weight').innerText = `weight: ${precise(
-          newPokemon.weight,
-          3
-        )}kg`;
-        pkCard.style.display = 'grid';
-        document.querySelector('input').value = '';
-        spinner.style.display = 'none';
+        return newPokemon;
       } else {
         alert(
           `Pokemon ${pokemon.toUpperCase()} not found. Please try another entry...`
         );
+        // pkCard.style.display = 'none';
         return null;
       }
     } else {
       alert('Please enter a value or a id');
+      // pkCard.style.display = 'none';
       return undefined;
     }
   } catch (error) {
@@ -82,7 +61,79 @@ export const findPokemon = async pokemon => {
   }
 };
 
-export const addPokemonToCollection = () => {
+export const displayPokemonCard = pokemon => {
+  pkCard.innerHTML = '';
+  const outputHTML = `<div class="img">
+      <img id="pk-img" src="${pokemon.front}" />
+      <div>
+        <button class="pk-btn btn-small btn-invert" id="btn-img">
+          back
+        </button>
+      </div>
+    </div>
+    <div id="pk-name">Name: ${pokemon.name}</div>
+    <div id="pk-id">#${pokemon.id}</div>
+    <div id="pk-type">type: ${pokemon.type}</div>
+    <div id="pk-gen">${pokemon.gen}</div>
+    <div id="pk-height">height: ${pokemon.height}</div>
+    <div id="pk-weight">weight: ${pokemon.weight}</div>
+    <div>
+      <button class="pk-btn btn-small btn-invert" id="btn-catch">
+        catch
+      </button>
+    </div>`;
+  pkCard.insertAdjacentHTML('afterbegin', outputHTML);
+  pkCard.style.display = 'grid';
+  const btnCatch = document.getElementById('btn-catch');
+  btnCatch.addEventListener('click', function (e) {
+    displayPokemonCollection(pokemon);
+  });
+};
+
+const displayPokemonCollection = pokemon => {
+  if (!pokemon) return;
+
+  pokemonCollection.push(pokemon);
+  console.log(pokemonCollection);
+  containerCol.insertAdjacentHTML(
+    'beforeend',
+    `<div class="pk-card-col">
+    <div>
+      <img src="${pokemon.front}">
+    </div>
+    <div>${pokemon.name}</div>
+    <div>${pokemon.id}</div>
+    <div>${pokemon.type}</div>
+    <button id="btn-info" class="pk-btn btn-small">info</button>
+    <button id="btn-remove" class="pk-btn btn-small">x</button>
+  </div>`
+  );
+  containerCol.style.display = 'flex';
+  removeFromCollection(pokemonCollection);
+};
+
+const removeFromCollection = pokemonCollection => {
+  console.log('COL-BEFORE-REMOVING:\n', pokemonCollection);
+
+  const removeBtn = containerCol.querySelectorAll('#btn-remove');
+
+  removeBtn.forEach((btn, i) => {
+    btn.addEventListener('click', function (e) {
+      const test = this.parentElement.children[1].innerHTML;
+      console.log('test: ', test);
+      const index = pokemonCollection.indexOf(
+        pokemonCollection.find((pk, i) => pk.name === test)
+      );
+      if (index > -1) {
+        pokemonCollection.splice(index, 1);
+      }
+      this.parentElement.remove();
+      console.log('COL-AFTER-REMOVING:\n', pokemonCollection);
+    });
+  });
+};
+
+export const addPokemonToCollection = pokemon => {
   // ? Create Pokemon Collection Card
   // * 1) Define new DOM Elements
   const pkCardCol = document.createElement('DIV');
@@ -100,15 +151,15 @@ export const addPokemonToCollection = () => {
 
   // * 3) Append the Image Element
   pkCardCol.appendChild(pkCardImgDiv);
-  pkCardImg.src = pkImg.src;
+  pkCardImg.src = pokemon.front;
   pkCardImgDiv.appendChild(pkCardImg);
 
   // * 4) Append the Info Elements
-  pkCardName.innerText = pkName.innerText;
+  pkCardName.innerText = pokemon.name;
   pkCardCol.appendChild(pkCardName);
-  pkCardId.innerText = pkId.innerText;
+  pkCardId.innerText = pokemon.id;
   pkCardCol.appendChild(pkCardId);
-  pkCardType.innerText = pkType.innerText;
+  pkCardType.innerText = pokemon.type;
   pkCardCol.appendChild(pkCardType);
 
   // * 5) Append the Button Elements

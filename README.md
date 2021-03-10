@@ -68,3 +68,5 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
 After installing axios I was prompt with an error in the browser stating that _regenerationRuntime is not defined_. I had to install the npm module regeneration-runtime as a dependency in order to fix the problem.
 
 When searching for pokemon name **carbink** axios returns 404. Although get request for this pokemon work including the request using the id **703**
+
+Issues when searching for **tornadus**, **thundurus** and **landorus** as PokeApi accepts these only with ending **-incarnate**. Although using the IDs it works. Which are 641, 642 and 645.
