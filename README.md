@@ -6,7 +6,7 @@
 
 ## Introduction :open_book:
 
-This small App goal is to access the data available when calling [PokéAPI](https://pokeapi.co) and display it for easy reading on the browser - kind of like a small Pokédex I'm watching a couple of courses on [Udemy](https://www.udemy.com) and taking advantage of this idea to apply my knowledge and also practice Web Development.
+This small App goal is to access the data available when calling [PokéAPI](https://pokeapi.co) and display it for easy reading on the browser - kind of like a small Pokédex. I'm watching a couple of courses on [Udemy](https://www.udemy.com) and taking advantage of this idea to apply my knowledge and also learn Web Development as I go.
 
 ---
 
@@ -18,7 +18,6 @@ This small App goal is to access the data available when calling [PokéAPI](http
 - Express
 - EJS
 - Axios
-- [Pokemon](https://www.npmjs.com/package/pokemon)
 
 ---
 
@@ -41,9 +40,8 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
 
 - UI
   - Add functionality to the 'More Info' button;
-  - Structure the card to display more information; :heavy_check_mark:
   - Change the button 'Catch' positioning; :heavy_check_mark:
-  - Implement responsiveness;
+  - Implement responsiveness; :heavy_check_mark:
   - Need to make away of _**greying**_ out the button when no back image available;
   - Better HTML page structure;
   - ...
@@ -52,9 +50,9 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
   - Use JS Classes for better data structuring;
   - User input error handling;
   - Add Axios and async/await for new Promise calls; :heavy_check_mark:
-  - Structure the findPokemon() function;
+  - Structure the findPokemon() function; :heavy_check_mark:
   - Constant code improvements;
-  - Create a function to round the pokemon height and weight;
+  - Create a function to round the pokemon height and weight; :heavy_check_mark:
   - ...
 - Problems
   - If the selected _view_ of the Pokemon is **back** on clicking catch the pokemon will be saved with that img;
@@ -67,6 +65,4 @@ Then by clicking catch it's possible to be build a collection of Pokémons.
 
 After installing axios I was prompt with an error in the browser stating that _regenerationRuntime is not defined_. I had to install the npm module regeneration-runtime as a dependency in order to fix the problem.
 
-When searching for pokemon name **carbink** axios returns 404. Although get request for this pokemon work including the request using the id **703**
-
-Issues when searching for **tornadus**, **thundurus** and **landorus** as PokeApi accepts these only with ending **-incarnate**. Although using the IDs it works. Which are 641, 642 and 645.
+Issues when searching for **tornadus**, **thundurus** and **landorus** as PokeApi accepts these only with ending **-incarnate**. Although using the IDs it works. Which are 641, 642 and 645 respectively.
