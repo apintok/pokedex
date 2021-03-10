@@ -30,8 +30,8 @@ btnFind.addEventListener('click', async function (e) {
 });
 
 btnRandom.addEventListener('click', async function (e) {
-  const randPokemon = p.random();
-  const found = await findPokemon(randPokemon);
+  const random = String(Math.trunc(Math.random() * (798 - 1) + 1));
+  const found = await findPokemon(random);
   displayPokemonCard(found);
 });
 

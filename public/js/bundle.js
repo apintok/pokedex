@@ -3182,14 +3182,14 @@ btnFind.addEventListener('click', /*#__PURE__*/function () {
 }());
 btnRandom.addEventListener('click', /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(e) {
-    var randPokemon, found;
+    var random, found;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            randPokemon = _pokemon.default.random();
+            random = String(Math.trunc(Math.random() * (798 - 1) + 1));
             _context3.next = 3;
-            return (0, _utils.findPokemon)(randPokemon);
+            return (0, _utils.findPokemon)(random);
 
           case 3:
             found = _context3.sent;
@@ -3237,7 +3237,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52078" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52585" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
