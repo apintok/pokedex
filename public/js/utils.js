@@ -1,15 +1,10 @@
 import runtime, { async } from 'regenerator-runtime';
 import axios from 'axios';
 import { generations } from './gens';
-import pokemon from 'pokemon';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const spinner = document.querySelector('.lds-dual-ring');
 const pkCard = document.querySelector('.pk-card');
-const pkImg = document.getElementById('pk-img');
-const pkName = document.getElementById('pk-name');
-const pkId = document.getElementById('pk-id');
-const pkType = document.getElementById('pk-type');
 const containerCol = document.querySelector('.container-col');
 let pokemonCollection = [];
 
@@ -120,7 +115,6 @@ const removeFromCollection = pokemonCollection => {
   removeBtn.forEach((btn, i) => {
     btn.addEventListener('click', function (e) {
       const test = this.parentElement.children[1].innerHTML;
-      console.log('test: ', test);
       const index = pokemonCollection.indexOf(
         pokemonCollection.find((pk, i) => pk.name === test)
       );
@@ -131,52 +125,6 @@ const removeFromCollection = pokemonCollection => {
       console.log('COL-AFTER-REMOVING:\n', pokemonCollection);
     });
   });
-};
-
-export const addPokemonToCollection = pokemon => {
-  // ? Create Pokemon Collection Card
-  // * 1) Define new DOM Elements
-  const pkCardCol = document.createElement('DIV');
-  const pkCardName = document.createElement('DIV');
-  const pkCardId = document.createElement('DIV');
-  const pkCardType = document.createElement('DIV');
-  const pkCardImgDiv = document.createElement('DIV');
-  const pkCardImg = document.createElement('IMG');
-  const btnInfo = document.createElement('BUTTON');
-  const btnRemove = document.createElement('BUTTON');
-
-  // * 2) Add the Pokemon Card Container
-  pkCardCol.classList.add('pk-card-col');
-  containerCol.appendChild(pkCardCol);
-
-  // * 3) Append the Image Element
-  pkCardCol.appendChild(pkCardImgDiv);
-  pkCardImg.src = pokemon.front;
-  pkCardImgDiv.appendChild(pkCardImg);
-
-  // * 4) Append the Info Elements
-  pkCardName.innerText = pokemon.name;
-  pkCardCol.appendChild(pkCardName);
-  pkCardId.innerText = pokemon.id;
-  pkCardCol.appendChild(pkCardId);
-  pkCardType.innerText = pokemon.type;
-  pkCardCol.appendChild(pkCardType);
-
-  // * 5) Append the Button Elements
-  btnInfo.innerText = 'info';
-  btnInfo.setAttribute('id', 'btn-info');
-  btnInfo.classList.add('pk-btn', 'btn-small');
-  pkCardCol.appendChild(btnInfo);
-  btnRemove.innerText = 'x';
-  btnRemove.setAttribute('id', 'btn-remove');
-  btnRemove.classList.add('pk-btn', 'btn-small');
-  btnRemove.addEventListener('click', function (e) {
-    this.parentElement.remove();
-  });
-  pkCardCol.appendChild(btnRemove);
-
-  // * 6) Display the Collection Section
-  containerCol.style.display = 'flex';
 };
 
 const getPokemonType = types => {
