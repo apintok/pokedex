@@ -7,6 +7,7 @@ const spinner = document.querySelector('.lds-dual-ring');
 const pkCard = document.querySelector('.pk-card');
 const containerCol = document.querySelector('.container-col');
 let pokemonCollection = [];
+let clicked = false;
 
 const getPokemonData = async pokemon => {
   try {
@@ -18,6 +19,7 @@ const getPokemonData = async pokemon => {
       name: pokeData.name,
       id: pokeData.id,
       type: getPokemonType(pokeData.types),
+      exp: pokeData.base_experience,
       weight: pokeData.weight,
       height: pokeData.height,
       gen: getPokemonGeneration(pokeData.id),
@@ -43,12 +45,10 @@ export const findPokemon = async pokemon => {
         alert(
           `Pokemon ${pokemon.toUpperCase()} not found. Please try another entry...`
         );
-        // pkCard.style.display = 'none';
         return null;
       }
     } else {
       alert('Please enter a value or a id');
-      // pkCard.style.display = 'none';
       return undefined;
     }
   } catch (error) {
@@ -66,12 +66,12 @@ export const displayPokemonCard = pokemon => {
         </button>
       </div>
     </div>
-    <div id="pk-name">Name: ${pokemon.name}</div>
+    <div id="pk-name">name: ${pokemon.name}</div>
     <div id="pk-id">#${pokemon.id}</div>
     <div id="pk-type">type: ${pokemon.type}</div>
     <div id="pk-gen">${pokemon.gen}</div>
-    <div id="pk-height">height: ${pokemon.height}</div>
-    <div id="pk-weight">weight: ${pokemon.weight}</div>
+    <div id="pk-height">height: ${precise(pokemon.height, 2)} m</div>
+    <div id="pk-weight">weight: ${precise(pokemon.weight, 3)} kgs</div>
     <div>
       <button class="pk-btn btn-small btn-invert" id="btn-catch">
         catch
@@ -80,8 +80,14 @@ export const displayPokemonCard = pokemon => {
   pkCard.insertAdjacentHTML('afterbegin', outputHTML);
   pkCard.style.display = 'grid';
   const btnCatch = document.getElementById('btn-catch');
-  btnCatch.addEventListener('click', function (e) {
+  btnCatch.addEventListener('click', function () {
     displayPokemonCollection(pokemon);
+  });
+  const btnBackImg = document.getElementById('btn-img');
+  const pkImg = document.getElementById('pk-img');
+
+  btnBackImg.addEventListener('click', function () {
+    switchCardImage(this, pkImg, pokemon.front, pokemon.back);
   });
 };
 
@@ -148,20 +154,19 @@ const precise = (number, precision) => {
   return Number.parseFloat(number * toDecimal).toPrecision(precision);
 };
 
-/**
- * ? Add Event Listener to pkImgBtn to swith front and back
-let clicked = false;
-
-  btnImg.addEventListener('click', function (e) {
-    console.log('Back Image:', newPokemon.back);
+const switchCardImage = (btnBackImg, pkImg, frontImage, backImage) => {
+  if (!backImage) {
+    btnBackImg.disabled = true;
+    btnBackImg.classList.toggle('btn-disabled');
+  } else {
     if (!clicked) {
-      pkImg.src = newPokemon.back;
-      this.innerText = 'front';
-      clicked = true;
+      pkImg.src = backImage;
+      btnBackImg.innerText = 'front';
+      return (clicked = true);
     } else {
-      pkImg.src = newPokemon.front;
-      this.innerText = 'back';
-      clicked = false;
+      pkImg.src = frontImage;
+      btnBackImg.innerText = 'back';
+      return (clicked = false);
     }
-  });
- */
+  }
+};
