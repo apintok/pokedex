@@ -2752,6 +2752,7 @@ var spinner = document.querySelector('.lds-dual-ring');
 var pkCard = document.querySelector('.pk-card');
 var containerCol = document.querySelector('.container-col');
 var pokemonCollection = [];
+var clicked = false;
 
 var getPokemonData = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(pokemon) {
@@ -2772,6 +2773,7 @@ var getPokemonData = /*#__PURE__*/function () {
               name: pokeData.name,
               id: pokeData.id,
               type: getPokemonType(pokeData.types),
+              exp: pokeData.base_experience,
               weight: pokeData.weight,
               height: pokeData.height,
               gen: getPokemonGeneration(pokeData.id),
@@ -2827,8 +2829,7 @@ var findPokemon = /*#__PURE__*/function () {
             return _context2.abrupt("return", newPokemon);
 
           case 10:
-            alert("Pokemon ".concat(pokemon.toUpperCase(), " not found. Please try another entry...")); // pkCard.style.display = 'none';
-
+            alert("Pokemon ".concat(pokemon.toUpperCase(), " not found. Please try another entry..."));
             return _context2.abrupt("return", null);
 
           case 12:
@@ -2836,8 +2837,7 @@ var findPokemon = /*#__PURE__*/function () {
             break;
 
           case 14:
-            alert('Please enter a value or a id'); // pkCard.style.display = 'none';
-
+            alert('Please enter a value or a id');
             return _context2.abrupt("return", undefined);
 
           case 16:
@@ -2866,12 +2866,17 @@ exports.findPokemon = findPokemon;
 
 var displayPokemonCard = function displayPokemonCard(pokemon) {
   pkCard.innerHTML = '';
-  var outputHTML = "<div class=\"img\">\n      <img id=\"pk-img\" src=\"".concat(pokemon.front, "\" />\n      <div>\n        <button class=\"pk-btn btn-small btn-invert\" id=\"btn-img\">\n          back\n        </button>\n      </div>\n    </div>\n    <div id=\"pk-name\">Name: ").concat(pokemon.name, "</div>\n    <div id=\"pk-id\">#").concat(pokemon.id, "</div>\n    <div id=\"pk-type\">type: ").concat(pokemon.type, "</div>\n    <div id=\"pk-gen\">").concat(pokemon.gen, "</div>\n    <div id=\"pk-height\">height: ").concat(pokemon.height, "</div>\n    <div id=\"pk-weight\">weight: ").concat(pokemon.weight, "</div>\n    <div>\n      <button class=\"pk-btn btn-small btn-invert\" id=\"btn-catch\">\n        catch\n      </button>\n    </div>");
+  var outputHTML = "<div class=\"img\">\n      <img id=\"pk-img\" src=\"".concat(pokemon.front, "\" />\n      <div>\n        <button class=\"pk-btn btn-small btn-invert\" id=\"btn-img\">\n          back\n        </button>\n      </div>\n    </div>\n    <div id=\"pk-name\">name: ").concat(pokemon.name, "</div>\n    <div id=\"pk-id\">#").concat(pokemon.id, "</div>\n    <div id=\"pk-type\">type: ").concat(pokemon.type, "</div>\n    <div id=\"pk-gen\">").concat(pokemon.gen, "</div>\n    <div id=\"pk-height\">height: ").concat(precise(pokemon.height, 2), " m</div>\n    <div id=\"pk-weight\">weight: ").concat(precise(pokemon.weight, 3), " kgs</div>\n    <div>\n      <button class=\"pk-btn btn-small btn-invert\" id=\"btn-catch\">\n        catch\n      </button>\n    </div>");
   pkCard.insertAdjacentHTML('afterbegin', outputHTML);
   pkCard.style.display = 'grid';
   var btnCatch = document.getElementById('btn-catch');
-  btnCatch.addEventListener('click', function (e) {
+  btnCatch.addEventListener('click', function () {
     displayPokemonCollection(pokemon);
+  });
+  var btnBackImg = document.getElementById('btn-img');
+  var pkImg = document.getElementById('pk-img');
+  btnBackImg.addEventListener('click', function () {
+    switchCardImage(this, pkImg, pokemon.front, pokemon.back);
   });
 };
 
@@ -2936,23 +2941,23 @@ var precise = function precise(number, precision) {
   var toDecimal = 0.1;
   return Number.parseFloat(number * toDecimal).toPrecision(precision);
 };
-/**
- * ? Add Event Listener to pkImgBtn to swith front and back
-let clicked = false;
 
-  btnImg.addEventListener('click', function (e) {
-    console.log('Back Image:', newPokemon.back);
+var switchCardImage = function switchCardImage(btnBackImg, pkImg, frontImage, backImage) {
+  if (!backImage) {
+    btnBackImg.disabled = true;
+    btnBackImg.classList.toggle('btn-disabled');
+  } else {
     if (!clicked) {
-      pkImg.src = newPokemon.back;
-      this.innerText = 'front';
-      clicked = true;
+      pkImg.src = backImage;
+      btnBackImg.innerText = 'front';
+      return clicked = true;
     } else {
-      pkImg.src = newPokemon.front;
-      this.innerText = 'back';
-      clicked = false;
+      pkImg.src = frontImage;
+      btnBackImg.innerText = 'back';
+      return clicked = false;
     }
-  });
- */
+  }
+};
 },{"regenerator-runtime":"../../node_modules/regenerator-runtime/runtime.js","axios":"../../node_modules/axios/index.js","./gens":"gens.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -3077,7 +3082,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53403" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64410" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
