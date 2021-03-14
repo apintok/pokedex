@@ -2886,7 +2886,7 @@ var displayPokemonCollection = function displayPokemonCollection(pokemon) {
   if (!pokemon) return;
   pokemonCollection.push(pokemon);
   console.log(pokemonCollection);
-  containerCol.insertAdjacentHTML('beforeend', "<div class=\"pk-card-col\">\n    <div>\n      <img src=\"".concat(pokemon.front, "\">\n    </div>\n    <div>").concat(pokemon.name, "</div>\n    <div>").concat(pokemon.id, "</div>\n    <div>").concat(pokemon.type, "</div>\n    <button id=\"btn-info\" class=\"pk-btn btn-small\">info</button>\n    <button id=\"btn-remove\" class=\"pk-btn btn-small\">x</button>\n  </div>"));
+  containerCol.insertAdjacentHTML('beforeend', "<div class=\"pk-card-col\">\n    <div>\n      <img src=\"".concat(pokemon.front, "\">\n    </div>\n    <div>").concat(pokemon.name, "</div>\n    <div>").concat(pokemon.id, "</div>\n    <div>").concat(pokemon.type, "</div>\n    <a href=\"https://bulbapedia.bulbagarden.net/wiki/").concat(pokemon.name, "_(Pok\xE9mon)\" target=\"_blank\" id=\"btn-info\" class=\"pk-btn btn-small\">info</a>\n    <button id=\"btn-remove\" class=\"pk-btn btn-small\">x</button>\n  </div>"));
   containerCol.style.display = 'flex';
   removeFromCollection(pokemonCollection);
 };
@@ -2894,11 +2894,11 @@ var displayPokemonCollection = function displayPokemonCollection(pokemon) {
 var removeFromCollection = function removeFromCollection(pokemonCollection) {
   console.log('COL-BEFORE-REMOVING:\n', pokemonCollection);
   var removeBtn = containerCol.querySelectorAll('#btn-remove');
-  removeBtn.forEach(function (btn, i) {
-    btn.addEventListener('click', function (e) {
-      var test = this.parentElement.children[1].innerHTML;
+  removeBtn.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pkCardName = this.parentElement.children[1].innerHTML;
       var index = pokemonCollection.indexOf(pokemonCollection.find(function (pk, i) {
-        return pk.name === test;
+        return pk.name === pkCardName;
       }));
 
       if (index > -1) {
@@ -3082,7 +3082,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64410" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63335" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
