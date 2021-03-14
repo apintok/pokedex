@@ -105,7 +105,7 @@ const displayPokemonCollection = pokemon => {
     <div>${pokemon.name}</div>
     <div>${pokemon.id}</div>
     <div>${pokemon.type}</div>
-    <button id="btn-info" class="pk-btn btn-small">info</button>
+    <a href="https://bulbapedia.bulbagarden.net/wiki/${pokemon.name}_(Pokémon)" target="_blank" id="btn-info" class="pk-btn btn-small">info</a>
     <button id="btn-remove" class="pk-btn btn-small">x</button>
   </div>`
   );
@@ -118,11 +118,11 @@ const removeFromCollection = pokemonCollection => {
 
   const removeBtn = containerCol.querySelectorAll('#btn-remove');
 
-  removeBtn.forEach((btn, i) => {
-    btn.addEventListener('click', function (e) {
-      const test = this.parentElement.children[1].innerHTML;
+  removeBtn.forEach(btn => {
+    btn.addEventListener('click', function () {
+      const pkCardName = this.parentElement.children[1].innerHTML;
       const index = pokemonCollection.indexOf(
-        pokemonCollection.find((pk, i) => pk.name === test)
+        pokemonCollection.find((pk, i) => pk.name === pkCardName)
       );
       if (index > -1) {
         pokemonCollection.splice(index, 1);
