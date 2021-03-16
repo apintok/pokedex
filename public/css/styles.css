@@ -96,6 +96,18 @@ header ul li {
   grid-column: 2 / 4;
 }
 
+.pk-card-error {
+  display: none;
+  border-radius: 10px 10px;
+  background-color: var(--color-secondary);
+  box-shadow: 15px 15px 0px 0px var(--color-shadow);
+  color: var(--color-primary);
+  text-align: center;
+  text-transform: uppercase;
+  padding: 10px;
+  height: fit-content;
+}
+
 /* 
 * SECOND SECTION 
 * Display catched Pokémons

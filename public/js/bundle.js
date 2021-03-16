@@ -2750,6 +2750,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 var spinner = document.querySelector('.lds-dual-ring');
 var pkCard = document.querySelector('.pk-card');
+var pkCardError = document.querySelector('.pk-card-error');
 var containerCol = document.querySelector('.container-col');
 var pokemonCollection = [];
 var clicked = false;
@@ -2810,7 +2811,7 @@ var findPokemon = /*#__PURE__*/function () {
             _context2.prev = 0;
 
             if (!pokemon) {
-              _context2.next = 14;
+              _context2.next = 11;
               break;
             }
 
@@ -2821,40 +2822,36 @@ var findPokemon = /*#__PURE__*/function () {
             newPokemon = _context2.sent;
             console.log('New Pokémon: ', newPokemon);
 
-            if (!(newPokemon !== null)) {
-              _context2.next = 10;
+            if (newPokemon) {
+              _context2.next = 8;
               break;
             }
 
+            throw new Error("Pok\xE9mon ".concat(pokemon, " was not found..."));
+
+          case 8:
             return _context2.abrupt("return", newPokemon);
 
-          case 10:
-            alert("Pokemon ".concat(pokemon.toUpperCase(), " not found. Please try another entry..."));
-            return _context2.abrupt("return", null);
-
-          case 12:
-            _context2.next = 16;
-            break;
-
-          case 14:
+          case 11:
             alert('Please enter a value or a id');
             return _context2.abrupt("return", undefined);
 
-          case 16:
-            _context2.next = 21;
+          case 13:
+            _context2.next = 19;
             break;
 
-          case 18:
-            _context2.prev = 18;
+          case 15:
+            _context2.prev = 15;
             _context2.t0 = _context2["catch"](0);
-            console.error('Func - findPokemon: ', _context2.t0);
+            console.error('Func - findPokemon: ', _context2.t0.message);
+            displayError(_context2.t0.message);
 
-          case 21:
+          case 19:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 18]]);
+    }, _callee2, null, [[0, 15]]);
   }));
 
   return function findPokemon(_x2) {
@@ -2869,6 +2866,7 @@ var displayPokemonCard = function displayPokemonCard(pokemon) {
   var outputHTML = "<div class=\"img\">\n      <img id=\"pk-img\" src=\"".concat(pokemon.front, "\" />\n      <div>\n        <button class=\"pk-btn btn-small btn-invert\" id=\"btn-img\">\n          back\n        </button>\n      </div>\n    </div>\n    <div id=\"pk-name\">name: ").concat(pokemon.name, "</div>\n    <div id=\"pk-id\">#").concat(pokemon.id, "</div>\n    <div id=\"pk-type\">type: ").concat(pokemon.type, "</div>\n    <div id=\"pk-gen\">").concat(pokemon.gen, "</div>\n    <div id=\"pk-height\">height: ").concat(precise(pokemon.height, 2), " m</div>\n    <div id=\"pk-weight\">weight: ").concat(precise(pokemon.weight, 3), " kgs</div>\n    <div>\n      <button class=\"pk-btn btn-small btn-invert\" id=\"btn-catch\">\n        catch\n      </button>\n    </div>");
   pkCard.insertAdjacentHTML('afterbegin', outputHTML);
   pkCard.style.display = 'grid';
+  pkCardError.style.display = 'none';
   var btnCatch = document.getElementById('btn-catch');
   btnCatch.addEventListener('click', function () {
     displayPokemonCollection(pokemon);
@@ -2957,6 +2955,14 @@ var switchCardImage = function switchCardImage(btnBackImg, pkImg, frontImage, ba
       return clicked = false;
     }
   }
+};
+
+var displayError = function displayError(errorMsg) {
+  pkCardError.innerHTML = pkCard.innerHTML = '';
+  var outputHTML = "<p>".concat(errorMsg, "</p>");
+  pkCardError.insertAdjacentHTML('afterbegin', outputHTML);
+  pkCardError.style.display = 'grid';
+  pkCard.style.display = 'none';
 };
 },{"regenerator-runtime":"../../node_modules/regenerator-runtime/runtime.js","axios":"../../node_modules/axios/index.js","./gens":"gens.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -3082,7 +3088,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63335" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56886" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

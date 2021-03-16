@@ -5,6 +5,7 @@ import { generations } from './gens';
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const spinner = document.querySelector('.lds-dual-ring');
 const pkCard = document.querySelector('.pk-card');
+const pkCardError = document.querySelector('.pk-card-error');
 const containerCol = document.querySelector('.container-col');
 let pokemonCollection = [];
 let clicked = false;
@@ -39,20 +40,15 @@ export const findPokemon = async pokemon => {
       const newPokemon = await getPokemonData(pokemon.toLowerCase().trim());
       console.log('New Pokémon: ', newPokemon);
 
-      if (newPokemon !== null) {
-        return newPokemon;
-      } else {
-        alert(
-          `Pokemon ${pokemon.toUpperCase()} not found. Please try another entry...`
-        );
-        return null;
-      }
+      if (!newPokemon) throw new Error(`Pokémon ${pokemon} was not found...`);
+      return newPokemon;
     } else {
       alert('Please enter a value or a id');
       return undefined;
     }
   } catch (error) {
-    console.error('Func - findPokemon: ', error);
+    console.error('Func - findPokemon: ', error.message);
+    displayError(error.message);
   }
 };
 
@@ -79,6 +75,7 @@ export const displayPokemonCard = pokemon => {
     </div>`;
   pkCard.insertAdjacentHTML('afterbegin', outputHTML);
   pkCard.style.display = 'grid';
+  pkCardError.style.display = 'none';
   const btnCatch = document.getElementById('btn-catch');
   btnCatch.addEventListener('click', function () {
     displayPokemonCollection(pokemon);
@@ -169,4 +166,12 @@ const switchCardImage = (btnBackImg, pkImg, frontImage, backImage) => {
       return (clicked = false);
     }
   }
+};
+
+const displayError = errorMsg => {
+  pkCardError.innerHTML = pkCard.innerHTML = '';
+  const outputHTML = `<p>${errorMsg}</p>`;
+  pkCardError.insertAdjacentHTML('afterbegin', outputHTML);
+  pkCardError.style.display = 'grid';
+  pkCard.style.display = 'none';
 };
