@@ -10,44 +10,36 @@ const containerCol = document.querySelector('.container-col');
 let pokemonCollection = [];
 let clicked = false;
 
-const getPokemonData = async pokemon => {
-  try {
-    const res = await axios.get(`${BASE_URL}${pokemon}`);
-    const pokeData = res.data;
-    // console.log(pokeData);
-
-    return {
-      name: pokeData.name,
-      id: pokeData.id,
-      type: getPokemonType(pokeData.types),
-      exp: pokeData.base_experience,
-      weight: pokeData.weight,
-      height: pokeData.height,
-      gen: getPokemonGeneration(pokeData.id),
-      front: pokeData.sprites.front_default,
-      back: pokeData.sprites.back_default,
-    };
-  } catch (error) {
-    console.log('GetPokemonData - Error: ', error.message);
-    return null;
-  }
-};
-
 export const findPokemon = async pokemon => {
   // ? The parameter 'pokemon' is either an ID or a NAME;
   try {
     if (pokemon) {
-      const newPokemon = await getPokemonData(pokemon.toLowerCase().trim());
-      console.log('New Pokémon: ', newPokemon);
+      const res = await axios
+        .get(`${BASE_URL}${pokemon.toLowerCase().trim()}`)
+        .catch(_ => {
+          throw new Error(`pokemon ${pokemon} not found!`);
+        });
+      const pokeData = res.data;
 
-      if (!newPokemon) throw new Error(`Pokémon ${pokemon} was not found...`);
+      const newPokemon = {
+        id: pokeData.id,
+        name: pokeData.name,
+        exp: pokeData.base_experience,
+        weight: pokeData.weight,
+        height: pokeData.height,
+        front: pokeData.sprites.front_default,
+        back: pokeData.sprites.back_default,
+        type: getPokemonType(pokeData.types),
+        gen: getPokemonGeneration(pokeData.id),
+      };
+
       return newPokemon;
     } else {
       alert('Please enter a value or a id');
       return undefined;
     }
   } catch (error) {
-    console.error('Func - findPokemon: ', error.message);
+    console.log('Func - findPokemon: ', error.message);
     displayError(error.message);
   }
 };

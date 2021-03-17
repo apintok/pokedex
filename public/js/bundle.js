@@ -2755,107 +2755,65 @@ var containerCol = document.querySelector('.container-col');
 var pokemonCollection = [];
 var clicked = false;
 
-var getPokemonData = /*#__PURE__*/function () {
+var findPokemon = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(pokemon) {
-    var res, pokeData;
+    var res, pokeData, newPokemon;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
-            _context.next = 3;
-            return _axios.default.get("".concat(BASE_URL).concat(pokemon));
 
-          case 3:
+            if (!pokemon) {
+              _context.next = 10;
+              break;
+            }
+
+            _context.next = 4;
+            return _axios.default.get("".concat(BASE_URL).concat(pokemon.toLowerCase().trim())).catch(function (_) {
+              throw new Error("pokemon ".concat(pokemon, " not found!"));
+            });
+
+          case 4:
             res = _context.sent;
-            pokeData = res.data; // console.log(pokeData);
-
-            return _context.abrupt("return", {
-              name: pokeData.name,
+            pokeData = res.data;
+            newPokemon = {
               id: pokeData.id,
-              type: getPokemonType(pokeData.types),
+              name: pokeData.name,
               exp: pokeData.base_experience,
               weight: pokeData.weight,
               height: pokeData.height,
-              gen: getPokemonGeneration(pokeData.id),
               front: pokeData.sprites.front_default,
-              back: pokeData.sprites.back_default
-            });
+              back: pokeData.sprites.back_default,
+              type: getPokemonType(pokeData.types),
+              gen: getPokemonGeneration(pokeData.id)
+            };
+            return _context.abrupt("return", newPokemon);
 
-          case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](0);
-            console.log('GetPokemonData - Error: ', _context.t0.message);
-            return _context.abrupt("return", null);
+          case 10:
+            alert('Please enter a value or a id');
+            return _context.abrupt("return", undefined);
 
           case 12:
+            _context.next = 18;
+            break;
+
+          case 14:
+            _context.prev = 14;
+            _context.t0 = _context["catch"](0);
+            console.log('Func - findPokemon: ', _context.t0.message);
+            displayError(_context.t0.message);
+
+          case 18:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[0, 14]]);
   }));
 
-  return function getPokemonData(_x) {
+  return function findPokemon(_x) {
     return _ref.apply(this, arguments);
-  };
-}();
-
-var findPokemon = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(pokemon) {
-    var newPokemon;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            _context2.prev = 0;
-
-            if (!pokemon) {
-              _context2.next = 11;
-              break;
-            }
-
-            _context2.next = 4;
-            return getPokemonData(pokemon.toLowerCase().trim());
-
-          case 4:
-            newPokemon = _context2.sent;
-            console.log('New Pokémon: ', newPokemon);
-
-            if (newPokemon) {
-              _context2.next = 8;
-              break;
-            }
-
-            throw new Error("Pok\xE9mon ".concat(pokemon, " was not found..."));
-
-          case 8:
-            return _context2.abrupt("return", newPokemon);
-
-          case 11:
-            alert('Please enter a value or a id');
-            return _context2.abrupt("return", undefined);
-
-          case 13:
-            _context2.next = 19;
-            break;
-
-          case 15:
-            _context2.prev = 15;
-            _context2.t0 = _context2["catch"](0);
-            console.error('Func - findPokemon: ', _context2.t0.message);
-            displayError(_context2.t0.message);
-
-          case 19:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2, null, [[0, 15]]);
-  }));
-
-  return function findPokemon(_x2) {
-    return _ref2.apply(this, arguments);
   };
 }();
 
@@ -3088,7 +3046,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56886" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59079" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
