@@ -1,11 +1,11 @@
 import runtime, { async } from 'regenerator-runtime';
-import axios from 'axios';
 import { generations } from './gens';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const spinner = document.querySelector('.lds-dual-ring');
 const pkCard = document.querySelector('.pk-card');
 const pkCardError = document.querySelector('.pk-card-error');
+const mainContainer = document.querySelector('.container-display');
 const containerCol = document.querySelector('.container-col');
 let pokemonCollection = [];
 let clicked = false;
@@ -14,12 +14,12 @@ export const findPokemon = async pokemon => {
   // ? The parameter 'pokemon' is either an ID or a NAME;
   try {
     if (pokemon) {
-      const res = await axios
-        .get(`${BASE_URL}${pokemon.toLowerCase().trim()}`)
-        .catch(_ => {
-          throw new Error(`pokemon ${pokemon} not found!`);
-        });
-      const pokeData = res.data;
+      const res = await fetch(`${BASE_URL}${pokemon.toLowerCase().trim()}`);
+
+      if (!res.ok)
+        throw new Error(`pokémon <span>${pokemon}</span> not found!`);
+
+      const pokeData = await res.json();
 
       const newPokemon = {
         id: pokeData.id,
@@ -39,7 +39,7 @@ export const findPokemon = async pokemon => {
       return undefined;
     }
   } catch (error) {
-    console.log('Func - findPokemon: ', error.message);
+    // console.log('Func - findPokemon: ', error.message);
     displayError(error.message);
   }
 };
@@ -166,4 +166,10 @@ const displayError = errorMsg => {
   pkCardError.insertAdjacentHTML('afterbegin', outputHTML);
   pkCardError.style.display = 'grid';
   pkCard.style.display = 'none';
+};
+
+const renderSpinner = function (parentEl) {
+  const outputHTML = `<div class="lds-dual-ring"></div>`;
+  //parentEl.innerHTML = '';
+  parentEl.insertAdjacentHTML('afterbegin', outputHTML);
 };
