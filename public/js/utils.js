@@ -1,58 +1,46 @@
 import runtime, { async } from 'regenerator-runtime';
-import axios from 'axios';
 import { generations } from './gens';
 
 const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
 const spinner = document.querySelector('.lds-dual-ring');
 const pkCard = document.querySelector('.pk-card');
+const pkCardError = document.querySelector('.pk-card-error');
+const mainContainer = document.querySelector('.container-display');
 const containerCol = document.querySelector('.container-col');
 let pokemonCollection = [];
 let clicked = false;
-
-const getPokemonData = async pokemon => {
-  try {
-    const res = await axios.get(`${BASE_URL}${pokemon}`);
-    const pokeData = res.data;
-    // console.log(pokeData);
-
-    return {
-      name: pokeData.name,
-      id: pokeData.id,
-      type: getPokemonType(pokeData.types),
-      exp: pokeData.base_experience,
-      weight: pokeData.weight,
-      height: pokeData.height,
-      gen: getPokemonGeneration(pokeData.id),
-      front: pokeData.sprites.front_default,
-      back: pokeData.sprites.back_default,
-    };
-  } catch (error) {
-    console.log('GetPokemonData - Error: ', error.message);
-    return null;
-  }
-};
 
 export const findPokemon = async pokemon => {
   // ? The parameter 'pokemon' is either an ID or a NAME;
   try {
     if (pokemon) {
-      const newPokemon = await getPokemonData(pokemon.toLowerCase().trim());
-      console.log('New Pokémon: ', newPokemon);
+      const res = await fetch(`${BASE_URL}${pokemon.toLowerCase().trim()}`);
 
-      if (newPokemon !== null) {
-        return newPokemon;
-      } else {
-        alert(
-          `Pokemon ${pokemon.toUpperCase()} not found. Please try another entry...`
-        );
-        return null;
-      }
+      if (!res.ok)
+        throw new Error(`pokémon <span>${pokemon}</span> not found!`);
+
+      const pokeData = await res.json();
+
+      const newPokemon = {
+        id: pokeData.id,
+        name: pokeData.name,
+        exp: pokeData.base_experience,
+        weight: pokeData.weight,
+        height: pokeData.height,
+        front: pokeData.sprites.front_default,
+        back: pokeData.sprites.back_default,
+        type: getPokemonType(pokeData.types),
+        gen: getPokemonGeneration(pokeData.id),
+      };
+
+      return newPokemon;
     } else {
       alert('Please enter a value or a id');
       return undefined;
     }
   } catch (error) {
-    console.error('Func - findPokemon: ', error);
+    // console.log('Func - findPokemon: ', error.message);
+    displayError(error.message);
   }
 };
 
@@ -79,6 +67,7 @@ export const displayPokemonCard = pokemon => {
     </div>`;
   pkCard.insertAdjacentHTML('afterbegin', outputHTML);
   pkCard.style.display = 'grid';
+  pkCardError.style.display = 'none';
   const btnCatch = document.getElementById('btn-catch');
   btnCatch.addEventListener('click', function () {
     displayPokemonCollection(pokemon);
@@ -169,4 +158,18 @@ const switchCardImage = (btnBackImg, pkImg, frontImage, backImage) => {
       return (clicked = false);
     }
   }
+};
+
+const displayError = errorMsg => {
+  pkCardError.innerHTML = pkCard.innerHTML = '';
+  const outputHTML = `<p>${errorMsg}</p>`;
+  pkCardError.insertAdjacentHTML('afterbegin', outputHTML);
+  pkCardError.style.display = 'grid';
+  pkCard.style.display = 'none';
+};
+
+const renderSpinner = function (parentEl) {
+  const outputHTML = `<div class="lds-dual-ring"></div>`;
+  //parentEl.innerHTML = '';
+  parentEl.insertAdjacentHTML('afterbegin', outputHTML);
 };

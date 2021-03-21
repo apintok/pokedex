@@ -96,6 +96,30 @@ header ul li {
   grid-column: 2 / 4;
 }
 
+.pk-card-error {
+  display: none;
+  border-radius: 10px 10px;
+  background-color: var(--color-secondary);
+  box-shadow: 15px 15px 0px 0px var(--color-shadow);
+  color: var(--color-tertiary);
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+  font-size: 38px;
+  padding: 10px;
+  height: fit-content;
+}
+
+.pk-card-error p {
+  background: linear-gradient(currentColor 0 0) bottom / var(--d, 0) 3px
+    no-repeat;
+  transition: 0.5s;
+}
+
+.pk-card-error p:hover {
+  --d: 100%;
+}
+
 /* 
 * SECOND SECTION 
 * Display catched Pokémons
@@ -233,7 +257,7 @@ a {
 */
 
 .lds-dual-ring {
-  display: none;
+  display: grid;
   grid-area: 1 / 2;
   width: 80px;
   height: 80px;
@@ -247,8 +271,8 @@ a {
   height: 64px;
   margin: 8px;
   border-radius: 50%;
-  border: 6px solid var((--color-secondary));
-  border-color: var((--color-secondary)) transparent var((--color-secondary))
+  border: 6px solid var(--color-secondary);
+  border-color: var(--color-secondary) transparent var(--color-secondary)
     transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
