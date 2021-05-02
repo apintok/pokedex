@@ -7,62 +7,76 @@
     <link rel="icon" href="icon.png" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inder&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <title>Pokédex</title>
   </head>
 
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <a href="https://github.com/apintok/pokedex" target="_blank"
-              >github</a
-            >
-          </li>
-          <li><a href="https://pokeapi.co" target="_blank">pokeapi</a></li>
-          <li>
-            <a
-              href="https://bulbapedia.bulbagarden.net/wiki/Main_Page"
-              target="_blank"
-              >bulbapedia</a
-            >
-          </li>
-          <li id="info-link">info</li>
-        </ul>
-      </nav>
-    </header>
     <main>
-      <section>
-        <div class="container-find">
-          <div><h1>catch them all!!!</h1></div>
-          <input type="text" placeholder="type pokemon name/id here..." />
-          <div>
-            <button class="pk-btn" id="btn-find">go!</button>
-            <button class="pk-btn" id="btn-random">random!</button>
+      <!--SECTION 1-->
+      <section class="section-input">
+        <div class="header">
+          <div class="menu">
+            <ul class="menu__list">
+              <li class="menu__list--item">
+                <a
+                  href="https://github.com/apintok/pokedex"
+                  target="_blank"
+                  class="menu__list--link"
+                  >github</a
+                >
+              </li>
+              <li class="menu__list--item">
+                <a
+                  href="https://pokeapi.co"
+                  target="_blank"
+                  class="menu__list--link"
+                  >poekapi</a
+                >
+              </li>
+              <li class="menu__list--item">
+                <a
+                  href="https://bulbapedia.bulbagarden.net/wiki/Main_Page"
+                  target="_blank"
+                  class="menu__list--link"
+                  >bulbapedia</a
+                >
+              </li>
+              <li class="menu__list--item">
+                <a href="#" class="menu__list--link">info</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="input">
+            <p class="input__description">
+              In need of info about a pokemon? Search by its name or id and
+              click catch. If too lazy to write just click random!
+            </p>
+            <form action="#" class="input__form">
+              <input
+                type="text"
+                id="search"
+                name="seach"
+                id="name"
+                placeholder="Name or ID"
+                required
+              />
+              <button id="btn-find" class="btn">Catch</button>
+              <button id="btn-random" class="btn">Random</button>
+            </form>
           </div>
         </div>
-        <div class="container-display">
-          <div class="pk-card"></div>
-          <div class="pk-card-error"></div>
-        </div>
       </section>
-      <section>
-        <div class="container-col">
-          <!-- This is filled dynamically by JS -->
-        </div>
+      <!--SECTION 2-->
+      <section class="section-card">
+        <div class="container"></div>
       </section>
     </main>
-    <footer>
-      <p>
-        design by <a href="#" target="_blank">@jwodnicka</a> developed by
-        <a href="https://github.com/apintok" target="_blank">@apintok</a>
-      </p>
-      <p>work in progress...</p>
-    </footer>
+
     <script src="js/bundle.js"></script>
   </body>
 </html>

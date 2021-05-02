@@ -1,0 +1,188 @@
+.type-bug {
+  border: 4px solid #a8b820;
+  background-color: #a8b820; }
+
+.type-dark {
+  border: 4px solid #705848;
+  background-color: #705848; }
+
+.type-dragon {
+  border: 4px solid #7038f8;
+  background-color: #7038f8; }
+
+.type-electric {
+  border: 4px solid #f8d030;
+  background-color: #f8d030; }
+
+.type-fairy {
+  border: 4px solid #ee99ac;
+  background-color: #ee99ac; }
+
+.type-fighting {
+  border: 4px solid #c03028;
+  background-color: #c03028; }
+
+.type-fire {
+  border: 4px solid #f08030;
+  background-color: #f08030; }
+
+.type-flying {
+  border: 4px solid #a890f0;
+  background-color: #a890f0; }
+
+.type-ghost {
+  border: 4px solid #705898;
+  background-color: #705898; }
+
+.type-grass {
+  border: 4px solid #a7db8d;
+  background-color: #a7db8d; }
+
+.type-ground {
+  border: 4px solid #e0c068;
+  background-color: #e0c068; }
+
+.type-ice {
+  border: 4px solid #98d8d8;
+  background-color: #98d8d8; }
+
+.type-normal {
+  border: 4px solid #a8a878;
+  background-color: #a8a878; }
+
+.type-poison {
+  border: 4px solid #a040a0;
+  background-color: #a040a0; }
+
+.type-psychic {
+  border: 4px solid #fa92b2;
+  background-color: #fa92b2; }
+
+.type-rock {
+  border: 4px solid #b8a038;
+  background-color: #b8a038; }
+
+.type-steel {
+  border: 4px solid b8b8d0;
+  background-color: b8b8d0; }
+
+.type-water {
+  border: 4px solid #6890f0;
+  background-color: #6890f0; }
+
+.card {
+  display: inline-grid;
+  grid-template-columns: auto;
+  box-shadow: 0 0 1rem 0.2rem rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 1.8rem;
+  text-align: right;
+  position: relative;
+  min-width: 26rem;
+  margin: 10rem auto;
+  padding: 0 2rem 1.5rem 8rem; }
+  .card__element {
+    padding: 1rem; }
+    .card__element--img {
+      border-radius: 100px;
+      width: 16rem;
+      position: absolute;
+      top: -5rem;
+      left: -4rem;
+      background-color: #fff; }
+
+.btn {
+  background-color: #2998ff;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 10px;
+  margin: auto 5rem;
+  padding: 0.5rem 0;
+  outline: none; }
+
+.input {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  padding: 1rem 2rem;
+  font-size: 1.6rem; }
+  .input__description {
+    margin-bottom: 1rem;
+    font-size: inherit; }
+  .input__form {
+    border: none;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 0.5rem; }
+    .input__form input {
+      font-size: inherit;
+      font-family: inherit;
+      columns: inherit;
+      border-radius: 0.2rem;
+      border: none;
+      background-color: #d5eaff;
+      border-bottom: 3px solid transparent;
+      grid-column: 1 / 3;
+      margin: auto 4rem;
+      padding: 0.3rem; }
+      .input__form input:focus {
+        outline: none;
+        background-color: white;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+        border-bottom: 3px solid #2998ff; }
+      .input__form input:focus:invalid {
+        border-bottom: 3px solid #ff4f00; }
+
+.header {
+  display: inline-block;
+  margin: 1rem auto auto 1rem;
+  width: 50rem; }
+
+.menu__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-gap: 0;
+  font-size: 1.5rem; }
+  .menu__list--item {
+    background-color: #2998ff;
+    padding: 1rem 2.5rem;
+    text-align: center; }
+  .menu__list--item:hover {
+    background-color: rgba(255, 255, 255, 0.8); }
+  .menu__list--item:hover > a {
+    color: #2998ff; }
+  .menu__list--link {
+    text-decoration: none;
+    color: #fff; }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  box-sizing: border-box;
+  padding: 1rem;
+  font-family: 'Inder', sans-serif; }
+
+main {
+  border: 3px solid #2998ff;
+  border-radius: 9px;
+  height: 96vh;
+  margin-bottom: auto;
+  background-size: cover;
+  background-blend-mode: screen;
+  background-image: linear-gradient(to right bottom, #2998ff, #5643fa), url(https://f.rpp-noticias.io/2019/02/27/758683gen-1jpg.jpg); }

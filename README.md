@@ -1,4 +1,4 @@
-**v 1.0.0** :hammer:
+**v 1.0.1** :hammer:
 
 **live at** _https://pokefindex.herokuapp.com_
 
@@ -32,29 +32,25 @@ It should be a standard installation using `npm install` after downloading the c
 
 ## Current Funcionality :heavy_check_mark:
 
-Type the Pokémon name/id you want to search for. The button 'GO!' will return a Pokémon image, name, id, type(s), generation, height and weight of that Pokémon. The Random button will return a random Pokémon with the same information.
-Then by clicking catch it's possible to be build a collection of Pokémons.
+Type the Pokémon name/id you want to search for. The button 'Catch' will return a image, name, id, type(s), generation, height and weight of that Pokémon. The Random button will return Pokémon with the same information randomly.
+I removed the option to catch/collect Pokemons in a different container. The goal is only to display Pokemon info.
 
 ---
 
 ## Next Steps / Working on :construction:
 
 - UI
-  - Add functionality to the 'More Info' button; :heavy_check_mark:
-  - Change the button 'Catch' positioning; :heavy_check_mark:
-  - Implement responsiveness; :heavy_check_mark:
-  - Need to make away of _**greying**_ out the button when no back image available; :heavy_check_mark:
+  - This version includes a new design;
+  - It uses SASS in order to structure the CSS;
+  - The Pokemon Card will change color depending on its type;
+  - Implement responsiveness;
   - Trying to add a spinner while waiting to fetch the Pokemon;
   - Spinner for image load too;
   - ...
 - JS Code
   - Apply a better DRY principle;
   - Use JS Classes for better data structuring;
-  - User input error handling; :heavy_check_mark:
-  - Add Axios and async/await for new Promise calls; :heavy_check_mark:
-  - Structure the findPokemon() function; :heavy_check_mark:
-  - Create a function to round the pokemon height and weight; :heavy_check_mark:
-  - Structure the findPokemon function; :heavy_check_mark:
+  - Create a function to round the pokemon height and weight;
   - Error handling using trycatch;
   - Constant code improvements...
 - Problems

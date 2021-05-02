@@ -1,22 +1,11 @@
-import { findPokemon, displayPokemonCard } from './utils';
+import { findPokemon, displayPokemonCard } from './helpers';
 
 const input = document.querySelector('input');
 const btnFind = document.getElementById('btn-find');
 const btnRandom = document.getElementById('btn-random');
 
-input.addEventListener('keyup', async function (e) {
-  if (e.key === 'Enter') {
-    const found = await findPokemon(input.value);
-    if (!found) {
-      this.value = '';
-    } else {
-      displayPokemonCard(found);
-      this.value = '';
-    }
-  }
-});
-
-btnFind.addEventListener('click', async function () {
+btnFind.addEventListener('click', async function (e) {
+  e.preventDefault();
   const found = await findPokemon(input.value);
   if (!found) {
     input.value = '';
@@ -26,7 +15,8 @@ btnFind.addEventListener('click', async function () {
   }
 });
 
-btnRandom.addEventListener('click', async function () {
+btnRandom.addEventListener('click', async function (e) {
+  e.preventDefault();
   const random = String(Math.trunc(Math.random() * (798 - 1) + 1));
   const found = await findPokemon(random);
   displayPokemonCard(found);

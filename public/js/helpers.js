@@ -1,11 +1,10 @@
 import runtime, { async } from 'regenerator-runtime';
-import { generations } from './gens';
+import { API_URL, generations } from './config';
 
-const BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
-const spinner = document.querySelector('.lds-dual-ring');
-const pkCard = document.querySelector('.pk-card');
-const pkCardError = document.querySelector('.pk-card-error');
-const mainContainer = document.querySelector('.container-display');
+// const spinner = document.querySelector('.lds-dual-ring');
+const pkCard = document.querySelector('.card');
+// const pkCardError = document.querySelector('.pk-card-error');
+const container = document.querySelector('.container');
 const containerCol = document.querySelector('.container-col');
 let pokemonCollection = [];
 let clicked = false;
@@ -14,7 +13,7 @@ export const findPokemon = async pokemon => {
   // ? The parameter 'pokemon' is either an ID or a NAME;
   try {
     if (pokemon) {
-      const res = await fetch(`${BASE_URL}${pokemon.toLowerCase().trim()}`);
+      const res = await fetch(`${API_URL}${pokemon.toLowerCase().trim()}`);
 
       if (!res.ok)
         throw new Error(`pokémon <span>${pokemon}</span> not found!`);
@@ -39,45 +38,30 @@ export const findPokemon = async pokemon => {
       return undefined;
     }
   } catch (error) {
-    // console.log('Func - findPokemon: ', error.message);
-    displayError(error.message);
+    console.log('Func - findPokemon: ', error.message);
+    // displayError(error.message);
   }
 };
 
 export const displayPokemonCard = pokemon => {
-  pkCard.innerHTML = '';
-  const outputHTML = `<div class="img">
-      <img id="pk-img" src="${pokemon.front}" />
-      <div>
-        <button class="pk-btn btn-small btn-invert" id="btn-img">
-          back
-        </button>
-      </div>
+  console.log('pkObj > ', pokemon.type);
+  container.innerHTML = '';
+  const outputHTML = `<div class="card type-${pokemon.type.color}">
+    <div class="card__element">
+      <img
+        class="card__element--img type-${pokemon.type.color}"
+        src="${pokemon.front}"
+        alt="Pokemon Image"
+      />
     </div>
-    <div id="pk-name">name: ${pokemon.name}</div>
-    <div id="pk-id">#${pokemon.id}</div>
-    <div id="pk-type">type: ${pokemon.type}</div>
-    <div id="pk-gen">${pokemon.gen}</div>
-    <div id="pk-height">height: ${precise(pokemon.height, 2)} m</div>
-    <div id="pk-weight">weight: ${precise(pokemon.weight, 3)} kgs</div>
-    <div>
-      <button class="pk-btn btn-small btn-invert" id="btn-catch">
-        catch
-      </button>
-    </div>`;
-  pkCard.insertAdjacentHTML('afterbegin', outputHTML);
-  pkCard.style.display = 'grid';
-  pkCardError.style.display = 'none';
-  const btnCatch = document.getElementById('btn-catch');
-  btnCatch.addEventListener('click', function () {
-    displayPokemonCollection(pokemon);
-  });
-  const btnBackImg = document.getElementById('btn-img');
-  const pkImg = document.getElementById('pk-img');
-
-  btnBackImg.addEventListener('click', function () {
-    switchCardImage(this, pkImg, pokemon.front, pokemon.back);
-  });
+    <div class="card__element">#${pokemon.id}</div>
+    <div class="card__element">${pokemon.name}</div>
+    <div class="card__element">${pokemon.type.types}</div>
+    <div class="card__element">${pokemon.gen}</div>
+    <div class="card__element">height: ${precise(pokemon.height, 1)}</div>
+    <div class="card__element">weight: ${precise(pokemon.weight, 3)}</div>
+  </div>`;
+  container.insertAdjacentHTML('afterbegin', outputHTML);
 };
 
 const displayPokemonCollection = pokemon => {
@@ -125,9 +109,13 @@ const removeFromCollection = pokemonCollection => {
 const getPokemonType = types => {
   const [type1, type2] = types;
 
-  return types.length < 2
-    ? `${type1.type.name}`
-    : `${type1.type.name}/${type2.type.name}`;
+  return {
+    color: type1.type.name,
+    types:
+      types.length < 2
+        ? `${type1.type.name}`
+        : `${type1.type.name}/${type2.type.name}`,
+  };
 };
 
 const getPokemonGeneration = id => {

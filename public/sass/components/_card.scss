@@ -1,0 +1,25 @@
+.card {
+  display: inline-grid;
+  grid-template-columns: auto;
+  box-shadow: 0 0 1rem 0.2rem rgba($color-black, 0.5);
+  color: $color-white;
+  font-size: 1.8rem;
+  text-align: right;
+  position: relative;
+  min-width: 26rem;
+  margin: 10rem auto;
+  padding: 0 2rem 1.5rem 8rem;
+
+  &__element {
+    padding: 1rem;
+
+    &--img {
+      border-radius: 100px;
+      width: 16rem;
+      position: absolute;
+      top: -5rem;
+      left: -4rem;
+      background-color: $color-white;
+    }
+  }
+}

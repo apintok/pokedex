@@ -868,13 +868,15 @@ try {
   Function("r", "regeneratorRuntime = r")(runtime);
 }
 
-},{}],"gens.js":[function(require,module,exports) {
+},{}],"config.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.generations = void 0;
+exports.generations = exports.API_URL = void 0;
+var API_URL = 'https://pokeapi.co/api/v2/pokemon/';
+exports.API_URL = API_URL;
 var generations = [{
   name: 'Generation I',
   starts: 1,
@@ -909,7 +911,7 @@ var generations = [{
   ends: 898
 }];
 exports.generations = generations;
-},{}],"utils.js":[function(require,module,exports) {
+},{}],"helpers.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -919,7 +921,7 @@ exports.displayPokemonCard = exports.findPokemon = void 0;
 
 var _regeneratorRuntime = _interopRequireWildcard(require("regenerator-runtime"));
 
-var _gens = require("./gens");
+var _config = require("./config");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -943,11 +945,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var BASE_URL = 'https://pokeapi.co/api/v2/pokemon/';
-var spinner = document.querySelector('.lds-dual-ring');
-var pkCard = document.querySelector('.pk-card');
-var pkCardError = document.querySelector('.pk-card-error');
-var mainContainer = document.querySelector('.container-display');
+// const spinner = document.querySelector('.lds-dual-ring');
+var pkCard = document.querySelector('.card'); // const pkCardError = document.querySelector('.pk-card-error');
+
+var container = document.querySelector('.container');
 var containerCol = document.querySelector('.container-col');
 var pokemonCollection = [];
 var clicked = false;
@@ -967,7 +968,7 @@ var findPokemon = /*#__PURE__*/function () {
             }
 
             _context.next = 4;
-            return fetch("".concat(BASE_URL).concat(pokemon.toLowerCase().trim()));
+            return fetch("".concat(_config.API_URL).concat(pokemon.toLowerCase().trim()));
 
           case 4:
             res = _context.sent;
@@ -1009,8 +1010,7 @@ var findPokemon = /*#__PURE__*/function () {
           case 18:
             _context.prev = 18;
             _context.t0 = _context["catch"](0);
-            // console.log('Func - findPokemon: ', error.message);
-            displayError(_context.t0.message);
+            console.log('Func - findPokemon: ', _context.t0.message); // displayError(error.message);
 
           case 21:
           case "end":
@@ -1028,20 +1028,10 @@ var findPokemon = /*#__PURE__*/function () {
 exports.findPokemon = findPokemon;
 
 var displayPokemonCard = function displayPokemonCard(pokemon) {
-  pkCard.innerHTML = '';
-  var outputHTML = "<div class=\"img\">\n      <img id=\"pk-img\" src=\"".concat(pokemon.front, "\" />\n      <div>\n        <button class=\"pk-btn btn-small btn-invert\" id=\"btn-img\">\n          back\n        </button>\n      </div>\n    </div>\n    <div id=\"pk-name\">name: ").concat(pokemon.name, "</div>\n    <div id=\"pk-id\">#").concat(pokemon.id, "</div>\n    <div id=\"pk-type\">type: ").concat(pokemon.type, "</div>\n    <div id=\"pk-gen\">").concat(pokemon.gen, "</div>\n    <div id=\"pk-height\">height: ").concat(precise(pokemon.height, 2), " m</div>\n    <div id=\"pk-weight\">weight: ").concat(precise(pokemon.weight, 3), " kgs</div>\n    <div>\n      <button class=\"pk-btn btn-small btn-invert\" id=\"btn-catch\">\n        catch\n      </button>\n    </div>");
-  pkCard.insertAdjacentHTML('afterbegin', outputHTML);
-  pkCard.style.display = 'grid';
-  pkCardError.style.display = 'none';
-  var btnCatch = document.getElementById('btn-catch');
-  btnCatch.addEventListener('click', function () {
-    displayPokemonCollection(pokemon);
-  });
-  var btnBackImg = document.getElementById('btn-img');
-  var pkImg = document.getElementById('pk-img');
-  btnBackImg.addEventListener('click', function () {
-    switchCardImage(this, pkImg, pokemon.front, pokemon.back);
-  });
+  console.log('pkObj > ', pokemon.type);
+  container.innerHTML = '';
+  var outputHTML = "<div class=\"card type-".concat(pokemon.type.color, "\">\n    <div class=\"card__element\">\n      <img\n        class=\"card__element--img type-").concat(pokemon.type.color, "\"\n        src=\"").concat(pokemon.front, "\"\n        alt=\"Pokemon Image\"\n      />\n    </div>\n    <div class=\"card__element\">#").concat(pokemon.id, "</div>\n    <div class=\"card__element\">").concat(pokemon.name, "</div>\n    <div class=\"card__element\">").concat(pokemon.type.types, "</div>\n    <div class=\"card__element\">").concat(pokemon.gen, "</div>\n    <div class=\"card__element\">height: ").concat(precise(pokemon.height, 1), "</div>\n    <div class=\"card__element\">weight: ").concat(precise(pokemon.weight, 3), "</div>\n  </div>");
+  container.insertAdjacentHTML('afterbegin', outputHTML);
 };
 
 exports.displayPokemonCard = displayPokemonCard;
@@ -1080,21 +1070,24 @@ var getPokemonType = function getPokemonType(types) {
       type1 = _types[0],
       type2 = _types[1];
 
-  return types.length < 2 ? "".concat(type1.type.name) : "".concat(type1.type.name, "/").concat(type2.type.name);
+  return {
+    color: type1.type.name,
+    types: types.length < 2 ? "".concat(type1.type.name) : "".concat(type1.type.name, "/").concat(type2.type.name)
+  };
 };
 
 var getPokemonGeneration = function getPokemonGeneration(id) {
   var _loop = function _loop(i) {
     if (function (id) {
-      return _gens.generations[i].starts;
-    } && id <= _gens.generations[i].ends) {
+      return _config.generations[i].starts;
+    } && id <= _config.generations[i].ends) {
       return {
-        v: _gens.generations[i].name
+        v: _config.generations[i].name
       };
     }
   };
 
-  for (var i = 0; i < _gens.generations.length; i++) {
+  for (var i = 0; i < _config.generations.length; i++) {
     var _ret = _loop(i);
 
     if (_typeof(_ret) === "object") return _ret.v;
@@ -1136,10 +1129,10 @@ var renderSpinner = function renderSpinner(parentEl) {
 
   parentEl.insertAdjacentHTML('afterbegin', outputHTML);
 };
-},{"regenerator-runtime":"../../node_modules/regenerator-runtime/runtime.js","./gens":"gens.js"}],"index.js":[function(require,module,exports) {
+},{"regenerator-runtime":"../../node_modules/regenerator-runtime/runtime.js","./config":"config.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
-var _utils = require("./utils");
+var _helpers = require("./helpers");
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -1148,29 +1141,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var input = document.querySelector('input');
 var btnFind = document.getElementById('btn-find');
 var btnRandom = document.getElementById('btn-random');
-input.addEventListener('keyup', /*#__PURE__*/function () {
+btnFind.addEventListener('click', /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
     var found;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            if (!(e.key === 'Enter')) {
-              _context.next = 5;
-              break;
-            }
-
+            e.preventDefault();
             _context.next = 3;
-            return (0, _utils.findPokemon)(input.value);
+            return (0, _helpers.findPokemon)(input.value);
 
           case 3:
             found = _context.sent;
 
             if (!found) {
-              this.value = '';
+              input.value = '';
             } else {
-              (0, _utils.displayPokemonCard)(found);
-              this.value = '';
+              (0, _helpers.displayPokemonCard)(found);
+              input.value = '';
             }
 
           case 5:
@@ -1178,61 +1167,42 @@ input.addEventListener('keyup', /*#__PURE__*/function () {
             return _context.stop();
         }
       }
-    }, _callee, this);
+    }, _callee);
   }));
 
   return function (_x) {
     return _ref.apply(this, arguments);
   };
 }());
-btnFind.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-  var found;
-  return regeneratorRuntime.wrap(function _callee2$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.next = 2;
-          return (0, _utils.findPokemon)(input.value);
+btnRandom.addEventListener('click', /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
+    var random, found;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            e.preventDefault();
+            random = String(Math.trunc(Math.random() * (798 - 1) + 1));
+            _context2.next = 4;
+            return (0, _helpers.findPokemon)(random);
 
-        case 2:
-          found = _context2.sent;
+          case 4:
+            found = _context2.sent;
+            (0, _helpers.displayPokemonCard)(found);
 
-          if (!found) {
-            input.value = '';
-          } else {
-            (0, _utils.displayPokemonCard)(found);
-            input.value = '';
-          }
-
-        case 4:
-        case "end":
-          return _context2.stop();
+          case 6:
+          case "end":
+            return _context2.stop();
+        }
       }
-    }
-  }, _callee2);
-})));
-btnRandom.addEventListener('click', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-  var random, found;
-  return regeneratorRuntime.wrap(function _callee3$(_context3) {
-    while (1) {
-      switch (_context3.prev = _context3.next) {
-        case 0:
-          random = String(Math.trunc(Math.random() * (798 - 1) + 1));
-          _context3.next = 3;
-          return (0, _utils.findPokemon)(random);
+    }, _callee2);
+  }));
 
-        case 3:
-          found = _context3.sent;
-          (0, _utils.displayPokemonCard)(found);
-
-        case 5:
-        case "end":
-          return _context3.stop();
-      }
-    }
-  }, _callee3);
-})));
-},{"./utils":"utils.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+  return function (_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}());
+},{"./helpers":"helpers.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -1260,7 +1230,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50837" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63824" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

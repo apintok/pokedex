@@ -1,0 +1,30 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // This defines what 1 REM is!
+  // 1 REM = 10px;
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  padding: 1rem;
+  font-family: 'Inder', sans-serif;
+}
+
+main {
+  border: 3px solid $color-primary;
+  border-radius: 9px;
+  height: 96vh;
+  margin-bottom: auto;
+  background-size: cover;
+  background-blend-mode: screen;
+  background-image: linear-gradient(to right bottom, #2998ff, #5643fa),
+    url(https://f.rpp-noticias.io/2019/02/27/758683gen-1jpg.jpg);
+}
